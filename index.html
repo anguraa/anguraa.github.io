@@ -14,7 +14,7 @@
             --container-bg: rgba(255, 255, 255, 0.15); /* გამჭვირვალე თეთრი ფონი კონტეინერებისთვის */
             --modal-bg: rgba(255, 255, 255, 0.1); /* მოდალებისთვის უფრო გამჭვირვალე */
             --border-light: rgba(255, 255, 255, 0.3); /* ღია საზღვარი */
-            --accent-blue: #70a1ff; /* ღია ლურჯი აქცენტი */
+            --accent-color: #f7b731; /* Orange-Yellow Accent - NEW COLOR */
             --accent-green: #48dbfb; /* ცისფერი აქცენტი */
             --shadow-subtle: 0 4px 15px rgba(0, 0, 0, 0.3); /* რბილი ჩრდილი მუქ ფონზე */
             --shadow-strong: 0 8px 25px rgba(0, 0, 0, 0.5); /* ძლიერი ჩრდილი */
@@ -24,13 +24,6 @@
             --inner-modal-content-bg: rgba(255, 255, 255, 0.08); 
             --inner-modal-text: #f0f0f0; /* ღია ტექსტი მოდალის შიგნით */
             --inner-modal-border: rgba(255, 255, 255, 0.2); /* მოდალის შიდა საზღვრები */
-
-            /* ახალი ფერები ძებნის ველისთვის და აიქონებისთვის (თემატური) */
-            --search-border-color: #5a7d9a; /* ცისფერი-ნაცრისფერი */
-            --search-focus-border: #7dbcdb; /* ღია ცისფერი ფოკუსზე */
-            --search-icon-color: #a0aec0; /* ღია ნაცრისფერი აიქონისთვის */
-            --search-placeholder-color: #a0aec0; /* იგივე placeholder-ისთვის */
-            --search-input-bg: rgba(255, 255, 255, 0.1); /* გამჭვირვალე ფონი */
         }
 
         body {
@@ -40,7 +33,7 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            /*justify-content: center;*/ /* ამოვიღოთ, თუ გვაქვს footer და გვინდა ზემოდან დაიწყოს კონტენტი */
+            justify-content: center; /* ცენტრში გასწორება ვერტიკალურად */
             min-height: 100vh;
             box-sizing: border-box;
             line-height: 1.6;
@@ -48,7 +41,7 @@
             -moz-osx-font-smoothing: grayscale;
 
             /* ფონის ფოტო */
-            background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/c/cb/Henri_IV_%C3%A0_la_bataille_d%27Ivry.jpg/1920px-Henri_IV_%C3%A0_la_bataille_d%27Ivry.jpg'); /* შევცვალე უფრო მაღალი რეზოლუციის სურათზე, თუ ხელმისაწვდომია */
+            background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/c/cb/Henri_IV_%C3%A0_la_bataille_d%27Ivry.jpg/960px-Henri_IV_%C3%A0_la_bataille_d%27Ivry.jpg');
             background-size: cover; /* მთელ ეკრანზე გაშლა */
             background-position: center; /* ცენტრში გასწორება */
             background-attachment: fixed; /* არ დაიხვევა სქროლისას */
@@ -79,9 +72,9 @@
             width: 95%;
             border: 1px solid var(--border-light); /* ღია საზღვარი */
             position: relative;
-            animation: slideInUp 0.8s ease-out forwards; /* დავამატე 'forwards', რომ ანიმაცია ბოლოს დარჩეს */
+            animation: slideInUp 0.8s ease-out; /* ოდნავ ნელი ანიმაცია */
             color: var(--primary-text); /* ტექსტის ფერი */
-            margin: 50px auto; /* ცენტრში გასწორება ავტომატურად, ზემოდან და ქვემოდან დაშორება */
+            margin: auto; /* ცენტრში გასწორება ავტომატურად */
         }
 
         @keyframes slideInUp {
@@ -102,14 +95,14 @@
         .input-section {
             margin-bottom: 35px;
             display: flex;
-            flex-wrap: wrap; /* საშუალებას მისცემს ელემენტებს ჩამოვიდნენ პატარა ეკრანებზე */
+            flex-wrap: wrap;
             justify-content: center;
             align-items: flex-end;
             gap: 20px;
         }
 
         .input-group {
-            flex: 1 1 280px; /* საშუალებას მისცემს გაიზარდოს/დაპატარავდეს, მინიმუმ 280px */
+            flex: 1 1 280px;
             display: flex;
             flex-direction: column;
             align-items: flex-start;
@@ -123,50 +116,34 @@
             text-shadow: 0.5px 0.5px 1px rgba(0, 0, 0, 0.5);
         }
 
-        /* ძებნის ველი და აიქონი - გაუმჯობესება */
-        .search-input-wrapper {
-            position: relative;
-            width: 100%;
-        }
-
         input[type="text"] {
             width: 100%;
-            padding: 14px 45px 14px 18px; /* გაზრდილი padding მარჯვნივ აიქონისთვის */
-            border: 1px solid var(--search-border-color); /* თემატური საზღვარი */
+            padding: 14px 18px;
+            border: 1px solid var(--border-light);
             border-radius: 8px;
             font-size: 1.1em;
             box-sizing: border-box;
-            background-color: var(--search-input-bg); /* გამჭვირვალე ინფუთი */
+            background-color: rgba(255, 255, 255, 0.2); /* გამჭვირვალე ინფუთი */
             color: var(--primary-text); /* ინფუთის ტექსტის ფერი */
             transition: border-color 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
             box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.3); /* შიდა ჩრდილი */
         }
 
         input[type="text"]::placeholder {
-            color: var(--search-placeholder-color); /* Placeholder-ის ფერი */
+            color: var(--secondary-text); /* Placeholder-ის ფერი */
             opacity: 0.8;
         }
 
         input[type="text"]:focus {
-            border-color: var(--search-focus-border); /* ფოკუსის ფერი */
-            box-shadow: 0 0 0 4px rgba(125, 188, 219, 0.3), inset 0 1px 3px rgba(0, 0, 0, 0.3); /* აქცენტის ფერი ფოკუსზე */
-            background-color: rgba(255, 255, 255, 0.15); /* ოდნავ მუქი ფოკუსისას */
+            border-color: var(--accent-color); /* Updated to new accent color */
+            box-shadow: 0 0 0 4px rgba(247, 183, 49, 0.3), inset 0 1px 3px rgba(0, 0, 0, 0.3); /* Updated to new accent color */
+            background-color: rgba(255, 255, 255, 0.3);
             outline: none;
-        }
-
-        .search-icon-inside {
-            position: absolute;
-            right: 15px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: var(--search-icon-color); /* აიქონის ფერი */
-            font-size: 1.2em; /* აიქონის ზომა */
-            pointer-events: none; /* არ დაბლოკავს input-ზე დაწკაპუნებას */
         }
 
         button {
             padding: 14px 30px;
-            background-color: var(--accent-blue);
+            background-color: var(--accent-color); /* Updated to new accent color */
             color: white;
             border: none;
             border-radius: 8px;
@@ -175,13 +152,13 @@
             font-weight: 600;
             transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
             box-shadow: var(--shadow-subtle);
-            flex-shrink: 0; /* არ დაპატარავდება Flexbox-ში */
+            flex-shrink: 0;
             min-width: 120px;
             text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
         }
 
         button:hover {
-            background-color: #558ee8; /* ოდნავ მუქი ლურჯი */
+            background-color: #e6a72e; /* Slightly darker new accent color */
             transform: translateY(-3px);
             box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
         }
@@ -194,9 +171,9 @@
         #battleInfo {
             margin-top: 30px;
             padding: 25px;
-            background-color: var(--container-bg); /* იგივე გამჭვირვალე ფონი */
-            backdrop-filter: blur(3px); /* ოდნავ ნაკლები დაბუნდოვნება */
-            border-left: 6px solid var(--accent-blue);
+            background-color: var(--container-bg); /* Same transparent background */
+            backdrop-filter: blur(3px); /* Slightly less blur */
+            border-left: 6px solid var(--accent-color); /* Updated to new accent color */
             border-radius: 8px;
             font-size: 1.05em;
             text-align: left;
@@ -210,8 +187,10 @@
             box-shadow: var(--shadow-subtle);
             color: var(--primary-text);
             text-shadow: 0.5px 0.5px 1px rgba(0, 0, 0, 0.5);
-            /* საწყისი მდგომარეობა - არ გამოჩნდეს თავიდანვე */
-            /* Removed initial `show` class from HTML to make it initially hidden */
+            /* Refined design for #battleInfo */
+            border: 1px solid var(--border-light); /* Add a border */
+            text-align: center; /* Center the text */
+            line-height: 1.8; /* Improve readability */
         }
 
         #battleInfo.show {
@@ -232,30 +211,35 @@
             background-color: rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(3px);
             border: 1px solid var(--border-light);
-            border-radius: 50%; /* მრგვალი ღილაკები */
-            width: 45px; /* ოდნავ გაზრდილი სიგანე */
-            height: 45px; /* ოდნავ გაზრდილი სიმაღლე */
+            border-radius: 50%; /* Circular buttons */
+            width: 35px; /* Smaller width */
+            height: 35px; /* Smaller height */
             display: flex;
             justify-content: center;
             align-items: center;
             cursor: pointer;
-            font-size: 1.1em; /* ხატულის ზომა */
+            font-size: 0.9em; /* Smaller icon size */
             color: var(--secondary-text);
             transition: background-color 0.2s ease, box-shadow 0.2s ease, color 0.2s ease;
             box-shadow: var(--shadow-subtle);
             text-shadow: 0.5px 0.5px 1px rgba(0, 0, 0, 0.5);
+            /* New icon aesthetics */
+            border: none; /* Remove border for a cleaner look */
+            background: linear-gradient(145deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.05)); /* Gradient for depth */
         }
 
         .tab-toggle-button:hover {
             background-color: rgba(255, 255, 255, 0.2);
             color: var(--primary-text);
+            transform: translateY(-2px); /* Slight lift on hover */
         }
 
         .tab-toggle-button.active {
-            background-color: var(--accent-blue);
+            background-color: var(--accent-color); /* Updated to new accent color */
             color: white;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-            border-color: var(--accent-blue);
+            border-color: var(--accent-color); /* Updated to new accent color */
+            transform: translateY(0); /* Reset transform for active */
         }
 
         /* --- Modal Styles --- */
@@ -269,17 +253,16 @@
             height: 100%;
             overflow: auto;
             background-color: rgba(0, 0, 0, 0.6);
-            display: flex; /* Always flex for centering */
+            display: flex;
             justify-content: center;
             align-items: center;
             opacity: 0;
             transition: opacity 0.3s ease-out;
-            pointer-events: none; /* Make it unclickable when hidden */
         }
 
         .modal.show {
             opacity: 1;
-            pointer-events: auto; /* Make it clickable when shown */
+            display: flex; /* Ensure it stays flex when shown */
         }
 
         .modal-content {
@@ -312,7 +295,6 @@
             position: absolute;
             top: 15px;
             right: 20px;
-            cursor: pointer; /* დავამატე ქურსორი */
         }
 
         .close-button:hover,
@@ -374,7 +356,7 @@
 
         #historyList li span:first-child {
             font-weight: 600;
-            color: var(--accent-blue);
+            color: var(--accent-color); /* Updated to new accent color */
             font-size: 1.05em;
         }
 
@@ -428,8 +410,8 @@
 
         #feedbackForm input[type="email"]:focus,
         #feedbackForm textarea:focus {
-            border-color: var(--accent-blue);
-            box-shadow: 0 0 0 4px rgba(112, 161, 255, 0.2);
+            border-color: var(--accent-color); /* Updated to new accent color */
+            box-shadow: 0 0 0 4px rgba(247, 183, 49, 0.2); /* Updated to new accent color */
             background-color: rgba(255, 255, 255, 0.2);
             outline: none;
         }
@@ -466,24 +448,21 @@
             box-shadow: var(--shadow-subtle);
             line-height: 1.5;
             text-shadow: 0.5px 0.5px 1px rgba(0, 0, 0, 0.7);
-            margin-bottom: 25px; /* დაშორება გვერდის ქვედა ნაწილიდან */
         }
 
 
         /* მედია ქუერი მობილურებისთვის */
-        @media (max-width: 768px) { /* გაზრდილი breakpoint, რადგან 600px შეიძლება ცოტა იყოს */
+        @media (max-width: 600px) {
             body {
                 padding: 15px;
             }
 
             .container {
-                padding: 25px 20px; /* ოდნავ მეტი padding */
-                margin-top: 30px; /* შემცირებული ზედა მარჯინი */
+                padding: 20px 15px;
             }
 
             h1 {
-                font-size: 2em; /* ოდნავ პატარა ტელეფონებზე */
-                margin-bottom: 25px;
+                font-size: 2em;
             }
 
             .input-section {
@@ -509,9 +488,9 @@
             }
 
             .tab-toggle-button {
-                width: 40px; /* მცირედი შემცირება */
-                height: 40px; /* მცირედი შემცირება */
-                font-size: 0.95em; /* მცირედი შემცირება */
+                width: 35px; /* Smaller width for mobile */
+                height: 35px; /* Smaller height for mobile */
+                font-size: 0.9em; /* Smaller icon size for mobile */
             }
 
             .modal-content {
@@ -520,11 +499,7 @@
             }
 
             .modal-content h2 {
-                font-size: 1.6em; /* მცირედი შემცირება */
-            }
-
-            #historyList {
-                max-height: 200px; /* მცირედი შემცირება ისტორიის სიისთვის */
+                font-size: 1.5em;
             }
 
             .footer-info {
@@ -533,48 +508,12 @@
                 font-size: 0.75em;
             }
         }
-
-        @media (max-width: 480px) { /* კიდევ უფრო პატარა ეკრანებისთვის */
-            h1 {
-                font-size: 1.8em;
-            }
-
-            .tab-toggle-button {
-                width: 35px;
-                height: 35px;
-                font-size: 0.85em;
-            }
-
-            input[type="text"] {
-                font-size: 1em;
-                padding: 12px 40px 12px 15px; /* დაპატარავებული padding */
-            }
-
-            .search-icon-inside {
-                right: 12px; /* ოდნავ შიგნით */
-                font-size: 1.1em;
-            }
-
-            button {
-                font-size: 1em;
-                padding: 12px 20px;
-            }
-
-            #battleInfo {
-                font-size: 0.95em;
-                padding: 20px;
-            }
-
-            .modal-content h2 {
-                font-size: 1.4em;
-            }
-        }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="tab-bar">
-            <button class="tab-toggle-button active" id="historyTabButton" onclick="openModal('historyModal')">
+            <button class="tab-toggle-button" id="historyTabButton" onclick="openModal('historyModal')">
                 <i class="fas fa-book"></i> </button>
             <button class="tab-toggle-button" id="feedbackTabButton" onclick="openModal('feedbackModal')">
                 <i class="fas fa-envelope"></i> </button>
@@ -585,8 +524,7 @@
         <div class="input-section">
             <div class="input-group">
                 <label for="yearInput">შეიყვანეთ წელი:</label>
-                <div class="search-input-wrapper"> <input type="text" id="yearInput" placeholder="მაგ: 1121 ან 480 ძვ. წ." onkeydown="if(event.keyCode === 13) getBattleInfo()">
-                    <i class="fas fa-search search-icon-inside"></i> </div>
+                <input type="text" id="yearInput" placeholder="(მაგ: 1121)" onkeydown="if(event.keyCode === 13) getBattleInfo()">
             </div>
             <button onclick="getBattleInfo()">ძებნა</button>
         </div>
@@ -642,7 +580,7 @@
             '410': 'რომის გაძარცვა: 410 წელს ვესტგოთებმა ალარიხის მეთაურობით გაძარცვეს რომი, რაც დასავლეთ რომის იმპერიის დასუსტების სიმბოლო გახდა.',
             '451': 'კატალონის ველების ბრძოლა: 451 წელს რომაელებმა და ვესტგოთებმა ატილას ჰუნების არმია შეაჩერეს, რითაც ევროპა ჰუნების სრული დაპყრობისგან იხსნეს.',
             '476': 'დასავლეთ რომის იმპერიის დაცემა: 476 წელს რომულუს ავგუსტუსის ტახტიდან ჩამოგდებამ დასავლეთ რომის იმპერიის დასასრული აღნიშნა.',
-            '480 BC': 'თერმოპილეს ბრძოლა: ძვ.წ. 480 წელს სპარსეთის უზარმაცარ არმიასა და ბერძნულ გაერთიანებულ ძალებს შორის გამართული ბრძოლა, სადაც 300 სპარტელი გმირულად დაეცა.',
+            '480 BC': 'თერმოპილეს ბრძოლა: ძვ.წ. 480 წელს სპარსეთის უზარმაზარ არმიასა და ბერძნულ გაერთიანებულ ძალებს შორის გამართული ბრძოლა, სადაც 300 სპარტელი გმირულად დაეცა.',
             '333 BC': 'ისოსის ბრძოლა: ძვ.წ. 333 წელს ალექსანდრე დიდმა გადამწყვეტი გამარჯვება მოიპოვა სპარსეთის მეფე დარიუს III-ზე, რამაც მაკედონიის გავლენა გააფართოვა.',
             '216 BC': 'კანეს ბრძოლა: ძვ.წ. 216 წელს ჰანიბალმა, კართაგენელმა გენერალმა, გამანადგურებელი მარცხი მიაყენა რომის რესპუბლიკის არმიას, რაც სამხედრო ისტორიის ერთ-ერთი უდიდესი ტაქტიკური შედევრია.',
             '44 BC': 'იულიუს კეისრის მკვლელობა: მიუხედავად იმისა, რომ ბრძოლა არ იყო, ძვ.წ. 44 წელს იულიუს კეისრის მკვლელობამ რომის რესპუბლიკის დასასრული და იმპერიის დასაწყისი განაპირობა.',
@@ -660,7 +598,7 @@
             '1346': 'კრესის ბრძოლა: 1346 წელს ასწლიანი ომის დროს ინგლისელებმა გაანადგურეს ფრანგული არმია, რაც ინგლისური მშვილდოსნების ეფექტურობის დემონსტრირება იყო.',
             '1380': 'კულიკოვოს ბრძოლა: 1380 წელს რუსულმა ძალებმა დიმიტრი დონსკოის მეთაურობით დაამარცხეს ოქროს ურდო, რაც რუსეთის გათავისუფლებისკენ გადადგმული ნაბიჯი იყო.',
             '1410': 'გრუნვალდის ბრძოლა: 1410 წელს პოლონეთისა და ლიტვის გაერთიანებულმა ძალებმა დაამარცხეს ტევტონთა ორდენი, რაც შუა საუკუნეების ევროპის ერთ-ერთი უდიდესი ბრძოლა იყო.',
-            '1415': 'აჟენკურის ბრძოლა: 1415 წელს ინგლისის მეფე ჰენრი V-მ მოულოდნელი გამარჯვება მოიპოვა საფრანგეთის უზარმაცარ არმიაზე ასწლიანი ომის დროს.',
+            '1415': 'აჟენკურის ბრძოლა: 1415 წელს ინგლისის მეფე ჰენრი V-მ მოულოდნელი გამარჯვება მოიპოვა საფრანგეთის უზარმაზარ არმიაზე ასწლიანი ომის დროს.',
             '1453': 'კონსტანტინოპოლის დაცემა: 1453 წლის 29 მაისს ოსმალეთის იმპერიამ დაიპყრო კონსტანტინოპოლი, ბიზანტიის იმპერიის დედაქალაქი, რამაც ბოლო მოუღო ათასწლოვან იმპერიას და დიდი გავლენა იქონია მსოფლიო ისტორიაზე.',
             '1469': 'ფერერას ბრძოლა (ივრის ბრძოლა): ივრის ბრძოლა, რომელიც ჰენრი IV-ის გამარჯვებით დასრულდა, 1590 წელს მოხდა. 1469 წელი აღინიშნება ისტორიული მოვლენებით, მათ შორის არაგონის მეფე ფერდინანდ II-ისა და კასტილიის დედოფალ იზაბელა I-ის ქორწინებით, რაც ესპანეთის გაერთიანების დასაწყისი იყო.',
             '1492': 'გრანადის დაცემა: 1492 წელს ქრისტიანულმა ძალებმა აიღეს გრანადა, რამაც დაასრულა რეკონკისტა ესპანეთში. ამ წელს ასევე აღინიშნა ქრისტეფორე კოლუმბის პირველი მოგზაურობა ამერიკაში.',
@@ -716,10 +654,7 @@
             let yearInput = document.getElementById('yearInput').value.trim();
             const battleInfoDiv = document.getElementById('battleInfo');
 
-            // ანიმაციის გადატვირთვა
-            battleInfoDiv.classList.remove('show'); 
-            // საჭიროა ეს ხაზი, რათა ანიმაცია ყოველ ჯერზე გააქტიურდეს
-            void battleInfoDiv.offsetWidth; // Force reflow (DOM update)
+            battleInfoDiv.classList.remove('show');
 
             let info = '';
             let found = false;
@@ -731,7 +666,7 @@
             let cleanedYear = yearInput.replace(' bc', '');
             if (isNaN(parseInt(cleanedYear)) || !cleanedYear) {
                 info = 'გთხოვთ, შეიყვანოთ სწორი წელი.';
-                found = true; // მაინც აღმოჩენილად ჩავთვალოთ, რომ გამოჩნდეს შეტყობინება
+                found = true;
             } else {
                 if (yearInput.includes('bc')) {
                     const bcKey = cleanedYear + ' BC';
@@ -752,18 +687,16 @@
             }
 
             battleInfoDiv.innerHTML = info;
-            // timeout აღარაა საჭირო, რადგან ანიმაციას გადატვირთვა უკვე მოვახდინეთ
-            battleInfoDiv.classList.add('show'); 
+            setTimeout(() => {
+                battleInfoDiv.classList.add('show');
+            }, 50);
 
             if (found && yearInput && !searchHistory.includes(yearInput)) {
                 searchHistory.unshift(yearInput);
                 if (searchHistory.length > MAX_HISTORY_ITEMS) {
                     searchHistory.pop();
                 }
-                // updateHistoryList() მხოლოდ მაშინ, როცა ისტორიის მოდალი ღიაა
-                if (historyModal.classList.contains('show')) {
-                    updateHistoryList();
-                }
+                updateHistoryList();
             }
         }
 
@@ -782,7 +715,7 @@
 
             searchHistory.forEach((year, index) => {
                 const listItem = document.createElement('li');
-                listItem.innerHTML = `<span>${year.toUpperCase()}</span> <span class="clear-history-item" data-index="${index}"><i class="fas fa-times-circle"></i></span>`; // აიქონი წაშლის ღილაკზე
+                listItem.innerHTML = `<span>${year.toUpperCase()}</span> <span class="clear-history-item" data-index="${index}">წაშლა</span>`;
                 
                 listItem.querySelector('span').onclick = () => {
                     document.getElementById('yearInput').value = year;
@@ -791,8 +724,8 @@
                 };
 
                 listItem.querySelector('.clear-history-item').onclick = (e) => {
-                    e.stopPropagation(); // Stop event from bubbling to parent li
-                    removeHistoryItem(parseInt(e.target.dataset.index || e.target.closest('.clear-history-item').dataset.index)); // handles icon or span click
+                    e.stopPropagation();
+                    removeHistoryItem(parseInt(e.target.dataset.index));
                 };
                 historyList.appendChild(listItem);
             });
@@ -810,14 +743,11 @@
         const feedbackTabButton = document.getElementById('feedbackTabButton');
 
         function openModal(modalId) {
-            // Close all modals
+            // Close all modals first to ensure only one is open
             historyModal.classList.remove('show');
             feedbackModal.classList.remove('show');
-            // Wait for transition to complete before setting display: none
-            setTimeout(() => {
-                historyModal.style.display = 'none';
-                feedbackModal.style.display = 'none';
-            }, 300); // Should match CSS transition duration
+            historyModal.style.display = 'none';
+            feedbackModal.style.display = 'none';
 
             // Remove active class from all buttons
             historyTabButton.classList.remove('active');
@@ -829,7 +759,7 @@
                 // Small delay for CSS transition after display:flex
                 setTimeout(() => { historyModal.classList.add('show'); }, 10); 
                 historyTabButton.classList.add('active');
-                updateHistoryList(); // Update history only when opening modal
+                updateHistoryList();
             } else if (modalId === 'feedbackModal') {
                 feedbackModal.style.display = 'flex';
                 setTimeout(() => { feedbackModal.classList.add('show'); }, 10);
@@ -888,11 +818,7 @@
         });
 
         // Update history list on page load
-        // Initial display of the "welcome" message
-        document.addEventListener('DOMContentLoaded', () => {
-            document.getElementById('battleInfo').classList.add('show');
-            updateHistoryList();
-        });
+        document.addEventListener('DOMContentLoaded', updateHistoryList);
 
     </script>
 </body>
