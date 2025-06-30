@@ -278,16 +278,6 @@
             background-color: rgba(0, 0, 0, 0.7);
         }
         
-        select#quizLengthSelect {
-            background-color: rgba(0, 0, 0, 0.5);
-            color: var(--text-primary);
-            border: 1px solid var(--border-color);
-        }
-        select#quizLengthSelect option {
-            background-color: var(--container-bg);
-            color: var(--text-primary);
-        }
-
         textarea {
             resize: vertical;
             min-height: 100px;
@@ -337,6 +327,13 @@
         }
         button.error:hover {
             background-color: color-mix(in srgb, var(--accent-red) 80%, black);
+        }
+        
+        button:disabled {
+            background-color: #555;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
         }
 
         .paper-effect {
@@ -388,6 +385,37 @@
             background-color: var(--button-hover);
             border-color: var(--button-primary);
             color: white;
+        }
+
+        /* --- Custom Alert Notification --- */
+        #custom-alert {
+            position: fixed;
+            top: -100px; /* Start hidden */
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 15px 25px;
+            background-color: var(--container-bg);
+            color: var(--text-primary);
+            border: 2px solid var(--accent-gold);
+            border-radius: 8px;
+            box-shadow: var(--shadow-medium);
+            z-index: 9999;
+            transition: top 0.5s ease-in-out;
+            font-size: 1.1em;
+            text-align: center;
+        }
+        #custom-alert.show {
+            top: 20px; /* Slide into view */
+        }
+        #custom-alert.success { 
+            border-color: var(--accent-green); 
+            color: var(--accent-green);
+            text-shadow: 0 0 5px var(--accent-green);
+        }
+        #custom-alert.info { 
+            border-color: var(--accent-gold); 
+            color: var(--accent-gold);
+            text-shadow: 0 0 5px var(--accent-gold);
         }
 
         /* --- Modal Styles --- */
@@ -567,6 +595,7 @@
             align-items: center;
             font-size: 0.95em;
             color: var(--text-primary);
+            flex-wrap: wrap;
         }
 
         #historyList li:last-child, #knownBattlesList li:last-child, #unknownBattlesList li:last-child, #leaderboardList li:last-child {
@@ -679,19 +708,46 @@
 
         .quiz-start-screen .input-group {
             width: 100%;
-            max-width: 300px;
+            max-width: 400px;
             margin-bottom: 0;
             display: flex;
-            flex-direction: column; /* Stack label and select */
-            align-items: center; /* Center them */
-            gap: 10px;
+            flex-direction: column; 
+            align-items: center;
+            gap: 15px;
         }
-
-        .quiz-start-screen label {
-            font-size: 1.1em;
-            font-weight: 500;
-            color: var(--text-secondary);
-            margin-bottom: 0;
+        
+        /* New Quiz Length Selector */
+        .quiz-length-selector {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+        }
+        .length-option {
+            background-color: var(--container-bg);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            padding: 10px 20px;
+            font-size: 1em;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all var(--transition-normal);
+        }
+        .length-option:hover {
+            background-color: var(--button-hover);
+            border-color: var(--button-primary);
+            transform: translateY(-2px);
+        }
+        .length-option.active {
+            background-color: var(--accent-gold);
+            border-color: var(--accent-gold);
+            color: var(--text-dark);
+            font-weight: bold;
+            box-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+        }
+        .custom-length-input-container {
+            margin-top: 10px;
+            width: 100%;
+            max-width: 200px;
         }
 
         /* Quiz Content */
@@ -701,39 +757,43 @@
             animation: fadeIn 0.5s ease-out;
         }
 
+        /* Redesigned Quiz Controls Bar */
         .quiz-controls {
             display: flex;
-            justify-content: space-around; /* Better spacing */
+            justify-content: space-between;
             align-items: center;
             width: 100%;
             margin-bottom: 25px;
             flex-wrap: wrap;
-            gap: 20px;
-            padding: 15px;
-            background-color: rgba(0, 0, 0, 0.4);
+            gap: 15px;
+            padding: 10px;
+            background: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.4));
             border-radius: 12px;
-            border: 1px solid var(--border-color);
-            box-shadow: var(--shadow-light);
+            border-top: 1px solid var(--border-color);
+            border-bottom: 1px solid var(--border-color);
         }
         .quiz-controls .score-display {
-            font-size: 1.2em;
+            font-size: 1.1em;
             font-weight: 600;
-            color: var(--accent-gold);
-            text-align: center;
+            color: var(--text-primary);
+            background-color: rgba(0,0,0,0.5);
+            padding: 8px 15px;
+            border-radius: 20px; /* Pill shape */
+            border: 1px solid rgba(255,255,255,0.1);
+            transition: all var(--transition-normal);
             display: flex;
             align-items: center;
-            gap: 8px;
-            animation: fadeIn 0.5s;
+            gap: 10px;
+            flex-grow: 1;
+            justify-content: center;
         }
         .quiz-controls .score-display i {
-            font-size: 1.3em;
+            font-size: 1.2em;
+            text-shadow: 0 0 8px currentColor;
         }
-        #totalScoreDisplay {
-            color: var(--accent-green);
-        }
-        #totalScoreDisplay i {
-            color: var(--accent-green);
-        }
+        #quizScore i { color: var(--accent-gold); }
+        #quizTimerDisplay i { color: var(--text-secondary); }
+
 
         #quizCountdown {
             font-family: 'Playfair Display', serif;
@@ -776,7 +836,7 @@
         .answer-options {
             width: 100%;
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            grid-template-columns: repeat(2, 1fr); /* 2x2 Grid Layout */
             gap: 15px;
         }
 
@@ -796,7 +856,7 @@
             font-family: 'Merriweather', serif;
         }
 
-        .answer-options button:hover:not(.disabled) {
+        .answer-options button:hover:not(:disabled) {
             background-color: var(--button-hover);
             transform: translateY(-4px) scale(1.02);
             box-shadow: var(--shadow-medium);
@@ -813,8 +873,6 @@
             background-color: var(--accent-green);
             color: white;
             border-color: var(--accent-green);
-            pointer-events: none;
-            box-shadow: 0 0 20px rgba(76, 175, 80, 0.7);
             transform: scale(1.05);
             animation: pulseCorrect 0.6s ease-out;
         }
@@ -828,8 +886,6 @@
             background-color: var(--accent-red);
             color: white;
             border-color: var(--accent-red);
-            pointer-events: none;
-            box-shadow: var(--shadow-medium);
             animation: shake 0.4s;
         }
         @keyframes shake {
@@ -838,10 +894,16 @@
             40%, 80% { transform: translateX(8px); }
         }
         
-        .answer-options button.disabled {
-            opacity: 0.6;
+        .answer-options button:disabled {
+            opacity: 0.7;
             cursor: not-allowed;
+            box-shadow: none;
+            transform: none;
         }
+        .answer-options button.correct:disabled, .answer-options button.incorrect:disabled {
+             opacity: 1;
+        }
+
 
         #quizFeedback {
             margin-top: 20px;
@@ -896,36 +958,51 @@
         }
 
         /* Leaderboard Specific Styles */
-        #leaderboardList li {
-            justify-content: flex-start;
-            gap: 15px;
-            font-size: 1.05em;
+        #leaderboardList li .leaderboard-entry {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            align-items: center;
         }
         #leaderboardList li .rank {
             font-weight: 700;
             color: var(--accent-gold);
             min-width: 30px;
             text-align: right;
+            margin-right: 15px;
         }
         #leaderboardList li .name {
             flex-grow: 1;
+        }
+        #leaderboardList li .score-time {
+            display: flex;
+            gap: 15px;
+            align-items: center;
         }
         #leaderboardList li .score {
             font-weight: 700;
             color: var(--accent-green);
         }
+        #leaderboardList li .time {
+            font-size: 0.9em;
+            color: var(--text-secondary);
+        }
+
 
         /* Quiz End Screen Name Input */
         #quizEndScreen {
             display: none;
             flex-direction: column;
             align-items: center;
-            gap: 20px;
+            gap: 15px;
             margin-top: 20px;
+            width: 100%;
         }
         #quizEndScreen .inner-modal-box {
              width: 100%;
              max-width: 500px;
+             text-align: center;
+             line-height: 1.7;
         }
         #quizEndScreen label {
             color: var(--text-primary);
@@ -1183,6 +1260,9 @@
                 font-size: 0.8em;
                 border-radius: 5px;
             }
+            
+            .quiz-length-selector { flex-wrap: wrap; }
+            .length-option { padding: 8px 16px; font-size: 0.9em; }
 
             #testQuizContainer {
                 min-height: 180px;
@@ -1194,14 +1274,14 @@
             }
 
             .quiz-controls {
-                flex-direction: column;
+                flex-direction: column; 
                 gap: 10px;
                 margin-bottom: 15px;
                 padding: 10px;
             }
             .quiz-controls .score-display {
                 font-size: 1em;
-                min-width: auto;
+                width: 100%;
             }
 
             #questionText {
@@ -1212,7 +1292,7 @@
             }
 
             .answer-options {
-                grid-template-columns: 1fr;
+                grid-template-columns: 1fr; /* Revert to 1 column on mobile */
                 gap: 8px;
             }
 
@@ -1265,6 +1345,8 @@
     </style>
 </head>
 <body>
+    <div id="custom-alert"></div>
+
     <div class="side-nav">
         <button class="action-button" onclick="openModal('archiveModal', 'history')">
             <i class="fas fa-book-open"></i>
@@ -1356,14 +1438,16 @@
                 <div class="quiz-start-screen" id="quizStartScreen">
                     <div class="input-group">
                         <label for="quizLengthSelect"><i class="fas fa-list-ol"></i> კითხვების რაოდენობა:</label>
-                        <select id="quizLengthSelect">
-                            <option value="5">5</option>
-                            <option value="10" selected>10</option>
-                            <option value="15">15</option>
-                            <option value="20">20</option>
-                            <option value="custom">მორგებული</option>
-                        </select>
-                        <input type="number" id="customQuizLengthInput" placeholder="შეიყვანეთ" min="1" style="display: none;">
+                        <div class="quiz-length-selector" id="quizLengthSelector">
+                            <button class="length-option" data-value="5">5</button>
+                            <button class="length-option active" data-value="10">10</button>
+                            <button class="length-option" data-value="15">15</button>
+                            <button class="length-option" data-value="20">20</button>
+                            <button class="length-option" data-value="custom">სხვა</button>
+                        </div>
+                        <div class="custom-length-input-container" style="display: none;">
+                             <input type="number" id="customQuizLengthInput" placeholder="შეიყვანეთ რაოდენობა" min="1">
+                        </div>
                     </div>
                     <button onclick="prepareQuiz()"><i class="fas fa-play"></i> ტესტის დაწყება</button>
                 </div>
@@ -1373,7 +1457,7 @@
                 <div id="quizContent" style="display: none;">
                     <div class="quiz-controls">
                         <div class="score-display" id="quizScore"><i class="fas fa-star"></i> ქულა: 0 / 0</div>
-                        <div class="score-display" id="totalScoreDisplay"><i class="fas fa-medal"></i> სულ: 0</div>
+                        <div class="score-display" id="quizTimerDisplay"><i class="fas fa-clock"></i> დრო: 0წმ</div>
                     </div>
                     
                     <div id="questionText"></div>
@@ -1388,13 +1472,15 @@
                 <div id="quizEndScreen" style="display: none;">
                     <div class="inner-modal-box">
                         <i class="fas fa-award" style="font-size: 3em; color: var(--accent-gold); margin-bottom: 15px;"></i>
-                        <p>ტესტი დასრულებულია! თქვენ დააგროვეთ <span id="finalQuizScore" style="color: var(--accent-green); font-weight: bold;">0</span> ქულა <span id="finalQuizLength" style="font-weight: bold;">0</span>-დან.</p>
+                        <p>ტესტი დასრულებულია!</p>
+                        <p>თქვენ დააგროვეთ <span id="finalQuizScore" style="color: var(--accent-green); font-weight: bold;">0</span> ქულა <span id="finalQuizLength" style="font-weight: bold;">0</span>-დან.</p>
+                        <p>დახარჯული დრო: <span id="finalQuizTime" style="color: var(--accent-gold); font-weight: bold;">0</span>.</p>
                     </div>
                     <div class="input-group" style="align-items: center;">
                         <label for="playerNameInput"><i class="fas fa-user"></i> შეიყვანეთ თქვენი სახელი ლიდერბორდისთვის:</label>
                         <input type="text" id="playerNameInput" placeholder="თქვენი სახელი" maxlength="20">
                     </div>
-                    <button onclick="saveScoreAndReset()"><i class="fas fa-save"></i> ქულის შენახვა</button>
+                    <button id="saveScoreBtn"><i class="fas fa-save"></i> ქულის შენახვა</button>
                     <button onclick="resetQuizToStartScreen()" style="margin-top: 10px; background-color: var(--container-bg); border: 1px solid var(--border-color);"><i class="fas fa-redo-alt"></i> თავიდან დაწყება</button>
                 </div>
             </div>
@@ -1432,7 +1518,7 @@
                 <button id="addBattleModalTab" class="active" onclick="showContributeTab('add')"><i class="fas fa-pen-fancy"></i> დაამატე ბრძოლა</button>
                 <button id="feedbackModalTab" onclick="showContributeTab('feedback')"><i class="fas fa-comment-dots"></i> უკუკავშირი</button>
             </div>
-            <div class="inner-modal-box" id="addBattleContent">
+            <div class="inner-modal-box" id="addBattleContent" style="display: none;">
                 <h3><i class="fas fa-scroll"></i> ბრძოლის დამატება</h3>
                 <form id="addBattleForm" action="https://formspree.io/f/xldnaaqp" method="POST">
                     <label for="newYearInput">წელი:</label>
@@ -1493,6 +1579,7 @@
             '31 BC': 'აქციუმის ბრძოლა: ძვ.წ. 31 წელს ოქტავიანემ (შემდგომში იმპერატორი ავგუსტუსი) დაამარცხა მარკუს ანტონიუსი და კლეოპატრა, რამაც რომის რესპუბლიკის სამოქალაქო ომებს ბოლო მოუღო.',
             '732': 'ტურნერის (პუატიეს) ბრძოლა: ფრანკებმა კარლოს მარტელის მეთაურობით დაამარცხეს არაბები, რითაც შეაჩერეს ისლამის ექსპანსია დასავლეთ ევროპაში.',
             '800': 'კარლოს დიდის გამეფება: 800 წელს კარლოს დიდი საღვთო რომის იმპერატორად ეკურთხა, რაც მნიშვნელოვანი ეტაპი იყო ევროპის ისტორიაში.',
+'867': 'იორკის ბრძოლა მოხდა ვიკინგების დიდ წარმართულ არმიასა და ნორთუმბრიის ანგლოსაქსურ არმიებს შორის 867 წლის 21 მარტს ქალაქ იორკში.',
             '910': 'ლეხფელდის ბრძოლა (პირველი): უნგრელებმა გაანადგურეს ბავარიის არმია, რამაც აღმოსავლეთ ევროპაში მათი გავლენა გაზარდა.',
             '1066': 'ჰასტინგსის ბრძოლა: 1066 წლის 14 ოქტომბერს, ნორმანთა ჰერცოგმა უილიამ დამპყრობელმა დაამარცხა ინგლისის ანგლო-საქსური არმია. ამ ბრძოლამ ინგლისის ისტორია სამუდამოდ შეცვალა.',
             '1071': 'მანასკერტის ბრძოლა: თურქ-სელჩუკებმა სულთან ალფ-არსლანის მეთაურობით დაამარცხეს ბიზანტიის იმპერიის არმია, რამაც მცირე აზიაში თურქების დასახლებას დაუდო სათავე.',
@@ -1521,6 +1608,7 @@
             '1770': 'ასპინძის ბრძოლა: ერეკლე II-ის მეთაურობით ქართლ-კახეთის მცირერიცხოვანმა ჯარმა ბრწყინვალე გამარჯვება მოიპოვა ოსმალთა კოალიციურ ლაშქარზე.',
             '1775': 'ლექსინგტონისა და კონკორდის ბრძოლები: დაიწყო ამერიკის რევოლუციური ომი ბრიტანელებსა და ამერიკელ კოლონისტებს შორის პირველი შეტაკებებით.',
             '1777': 'სარატოგას ბრძოლა: ამერიკის რევოლუციური ომის გარდამტეხი მომენტი, სადაც ამერიკულმა ძალებმა დაამარცხეს ბრიტანელები, რამაც საფრანგეთი დაარწმუნა ამერიკელების მხარდაჭერაში.',
+            '1781': 'იორკთაუნის ბრძოლა: ამერიკის რევოლუციური ომის კულმინაცია. ჯორჯ ვაშინგტონის მეთაურობით ამერიკულმა და ფრანგულმა ძალებმა ალყა შემოარტყეს და დანებება აიძულეს ბრიტანულ არმიას, რამაც ფაქტობრივად დაასრულა ომი.',
             '1789': 'ბასტილიის აღება: 14 ივლისს პარიზელებმა აიღეს ბასტილიის ციხე, რითაც საფრანგეთის დიდი რევოლუცია დაიწყო.',
             '1795': 'კრწანისის ბრძოლა: თბილისთან გამართული ტრაგიკული ბრძოლა ქართლ-კახეთის სამეფოსა და ირანის შაჰ აღა-მაჰმად-ხანის არმიას შორის. მიუხედავად ერეკლე II-ის და 300 არაგველის გმირობისა, ქართული ჯარი დამარცხდა და თბილისი განადგურდა.',
             '1805': 'ტრაფალგარის ბრძოლა: ბრიტანულმა ფლოტმა ადმირალ ნელსონის მეთაურობით გაანადგურა საფრანგეთ-ესპანეთის გაერთიანებული ფლოტი, რითაც უზრუნველყო ბრიტანეთის საზღვაო ჰეგემონია.',
@@ -1569,6 +1657,10 @@
         let quizLength = 0;
         let questionsAskedThisQuiz = []; 
         let leaderboard = JSON.parse(localStorage.getItem('leaderboard')) || [];
+        
+        let quizTimerInterval;
+        let quizStartTime;
+        let quizTotalTime = 0;
         let countdownInterval;
 
         const quizEligibleBattles = Object.keys(battlesData).filter(year => {
@@ -1640,6 +1732,8 @@
                     key: currentBattleKey,
                     description: battlesData[currentBattleKey]
                 };
+            } else {
+                lastSearchedBattle = null;
             }
 
             if (yearInput && !isNaN(parseInt(cleanedYear))) { 
@@ -1678,18 +1772,31 @@
                 historyList.appendChild(listItem);
             });
         }
+        
+        function showCustomAlert(message, type = 'info') { // types: info, success
+            const alertBox = document.getElementById('custom-alert');
+            if (alertBox.classList.contains('show')) return; // Prevent multiple alerts at once
+            alertBox.textContent = message;
+            alertBox.className = `show ${type}`; 
+            setTimeout(() => {
+                alertBox.className = '';
+            }, 3000); // Hide after 3 seconds
+        }
 
         function addBattleToKnowledgeList(type) {
             if (!lastSearchedBattle) return;
             const list = type === 'known' ? knownBattles : unknownBattles;
             const otherList = type === 'known' ? unknownBattles : knownBattles;
-            if (list.some(item => item.key === lastSearchedBattle.key)) return;
+            if (list.some(item => item.key === lastSearchedBattle.key)) {
+                showCustomAlert(`ეს ბრძოლა უკვე არის "${type === 'known' ? 'ვიცი' : 'არ ვიცი'}" სიაში.`, 'info');
+                return;
+            };
             const otherIndex = otherList.findIndex(item => item.key === lastSearchedBattle.key);
             if (otherIndex > -1) otherList.splice(otherIndex, 1);
             list.unshift(lastSearchedBattle);
             localStorage.setItem('knownBattles', JSON.stringify(knownBattles));
             localStorage.setItem('unknownBattles', JSON.stringify(unknownBattles));
-            alert(`ბრძოლა "${lastSearchedBattle.year}" დაემატა "${type === 'known' ? 'ვიცი' : 'არ ვიცი'}" სიაში!`);
+            showCustomAlert(`ბრძოლა "${lastSearchedBattle.year}" დაემატა "${type === 'known' ? 'ვიცი' : 'არ ვიცი'}" სიაში!`, 'success');
             updateKnowledgeLists();
         }
 
@@ -1728,8 +1835,11 @@
         function removeListItem(listType, index) {
             const listMap = { history: searchHistory, known: knownBattles, unknown: unknownBattles };
             listMap[listType].splice(index, 1);
-            localStorage.setItem(`${listType}Battles`, JSON.stringify(listMap[listType])); // For known/unknown
-            if (listType === 'history') localStorage.setItem('searchHistory', JSON.stringify(searchHistory));
+            if (listType === 'history') {
+                localStorage.setItem('searchHistory', JSON.stringify(searchHistory));
+            } else {
+                localStorage.setItem(`${listType}Battles`, JSON.stringify(listMap[listType]));
+            }
             updateHistoryList();
             updateKnowledgeLists();
         }
@@ -1751,15 +1861,19 @@
 
         function extractBattleName(description) {
             let name = description.split(':')[0].trim();
-            // Complex name extraction logic simplified for brevity
             if (name.length > 50) name = name.substring(0, 50) + '...';
             return name.replace(/[,.!?]$/, '');
         }
 
         function prepareQuiz() {
-            const quizLengthSelect = document.getElementById('quizLengthSelect');
-            const customQuizLengthInput = document.getElementById('customQuizLengthInput');
-            quizLength = quizLengthSelect.value === 'custom' ? parseInt(customQuizLengthInput.value) : parseInt(quizLengthSelect.value);
+            const customInput = document.getElementById('customQuizLengthInput');
+            const activeOption = document.querySelector('#quizLengthSelector .length-option.active');
+            
+            if (activeOption.dataset.value === 'custom') {
+                quizLength = parseInt(customInput.value);
+            } else {
+                quizLength = parseInt(activeOption.dataset.value);
+            }
 
             if (isNaN(quizLength) || quizLength <= 0 || quizLength > quizEligibleBattles.length) {
                 alert(`გთხოვთ, შეიყვანოთ კითხვების სწორი რაოდენობა (1-დან ${quizEligibleBattles.length}-მდე).`);
@@ -1787,10 +1901,18 @@
             quizScore = 0;
             questionsAnswered = 0;
             questionsAskedThisQuiz = [];
+            
+            quizStartTime = Date.now();
+            quizTimerInterval = setInterval(updateQuizTimerDisplay, 1000);
+
             document.getElementById('quizScore').innerHTML = `<i class="fas fa-star"></i> ქულა: 0 / 0`;
-            document.getElementById('totalScoreDisplay').innerHTML = `<i class="fas fa-medal"></i> სულ: ${localStorage.getItem('totalQuizScore') || 0}`;
             updateProgressBar();
             generateQuestion();
+        }
+        
+        function updateQuizTimerDisplay() {
+            const elapsedSeconds = Math.round((Date.now() - quizStartTime) / 1000);
+            document.getElementById('quizTimerDisplay').innerHTML = `<i class="fas fa-clock"></i> დრო: ${elapsedSeconds}წმ`;
         }
 
         function generateQuestion() {
@@ -1848,7 +1970,7 @@
             const correctAnswerText = currentQuestion.type === 'yearByName' ? currentQuestion.correctYear : currentQuestion.correctName;
 
             answerButtons.forEach(button => {
-                button.classList.add('disabled');
+                button.disabled = true; // Disable all buttons once an answer is chosen
                 if (button.textContent === correctAnswerText) {
                     button.classList.add('correct');
                 } else if (button.textContent === selectedOption) {
@@ -1878,10 +2000,16 @@
         }
 
         function endQuiz() {
+            clearInterval(quizTimerInterval);
+            quizTotalTime = Math.round((Date.now() - quizStartTime) / 1000);
+
             document.getElementById('quizContent').style.display = 'none';
             document.getElementById('quizEndScreen').style.display = 'flex';
+            
             document.getElementById('finalQuizScore').textContent = quizScore;
             document.getElementById('finalQuizLength').textContent = quizLength;
+            document.getElementById('finalQuizTime').textContent = `${quizTotalTime} წამი`;
+
             document.getElementById('playerNameInput').value = `მოთამაშე ${Math.floor(Math.random() * 1000)}`;
         }
 
@@ -1889,8 +2017,22 @@
             const playerName = document.getElementById('playerNameInput').value.trim();
             if (!playerName) { alert('გთხოვთ, შეიყვანოთ თქვენი სახელი!'); return; }
 
-            leaderboard.push({ name: playerName, score: quizScore, date: new Date().toLocaleDateString() });
-            leaderboard.sort((a, b) => b.score - a.score).splice(10); // Keep top 10
+            leaderboard.push({ 
+                name: playerName, 
+                score: quizScore, 
+                time: quizTotalTime, 
+                date: new Date().toLocaleDateString() 
+            });
+
+            // Sort by score (desc), then by time (asc)
+            leaderboard.sort((a, b) => {
+                if (b.score !== a.score) {
+                    return b.score - a.score;
+                }
+                return a.time - b.time;
+            });
+            
+            leaderboard.splice(10); // Keep top 10
             localStorage.setItem('leaderboard', JSON.stringify(leaderboard));
             
             let totalScore = (parseInt(localStorage.getItem('totalQuizScore')) || 0) + quizScore;
@@ -1902,17 +2044,22 @@
         }
 
         function updateProgressBar() {
-            document.getElementById('quizProgressBar').style.width = `${(questionsAnswered / quizLength) * 100}%`;
+            const progress = quizLength > 0 ? (questionsAnswered / quizLength) * 100 : 0;
+            document.getElementById('quizProgressBar').style.width = `${progress}%`;
         }
 
         function resetQuizToStartScreen() {
             clearInterval(countdownInterval);
+            clearInterval(quizTimerInterval);
             document.getElementById('quizStartScreen').style.display = 'flex';
             document.getElementById('quizContent').style.display = 'none';
             document.getElementById('quizEndScreen').style.display = 'none';
             document.getElementById('quizCountdown').style.display = 'none';
-            document.getElementById('quizLengthSelect').value = '10';
-            document.getElementById('customQuizLengthInput').style.display = 'none';
+            // Reset custom quiz length selector
+            document.querySelectorAll('#quizLengthSelector .length-option').forEach(btn => btn.classList.remove('active'));
+            document.querySelector('#quizLengthSelector .length-option[data-value="10"]').classList.add('active');
+            document.querySelector('.custom-length-input-container').style.display = 'none';
+
             document.getElementById('quizProgressBar').style.width = '0%';
         }
 
@@ -1928,7 +2075,17 @@
 
             leaderboard.forEach((entry, index) => {
                 const listItem = document.createElement('li');
-                listItem.innerHTML = `<span class="rank">${index + 1}.</span> <span class="name">${entry.name}</span> <span class="score">${entry.score} ქულა</span> <small class="date" style="color: var(--text-secondary);">(${entry.date})</small>`;
+                listItem.innerHTML = `
+                    <div class="leaderboard-entry">
+                        <div>
+                            <span class="rank">${index + 1}.</span>
+                            <span class="name">${entry.name}</span>
+                        </div>
+                        <div class="score-time">
+                             <span class="score">${entry.score} ქულა</span>
+                             <span class="time"><i class="fas fa-clock"></i> ${entry.time} წმ</span>
+                        </div>
+                    </div>`;
                 leaderboardList.appendChild(listItem);
             });
         }
@@ -1938,7 +2095,6 @@
                 leaderboard = [];
                 localStorage.removeItem('leaderboard');
                 localStorage.setItem('totalQuizScore', '0');
-                document.getElementById('totalScoreDisplay').innerHTML = `<i class="fas fa-medal"></i> სულ: 0`;
                 updateLeaderboardDisplay();
             }
         }
@@ -1949,7 +2105,7 @@
             localStorage.setItem('isSubscribed', 'true');
             pageViews = 0;
             localStorage.setItem('pageViews', '0');
-            alert('გამოწერა წარმატებით გააქტიურდა! გმადლობთ მხარდაჭერისთვის.');
+            showCustomAlert('გამოწერა წარმატებით გააქტიურდა! გმადლობთ.', 'success');
             closeModal('subscribeModal');
         }
 
@@ -1960,9 +2116,9 @@
             modal.style.display = 'flex';
             setTimeout(() => modal.classList.add('show'), 10);
 
-            if (modalId === 'archiveModal') { updateHistoryList(); loadKnowledgeLists(); showArchiveTab(defaultTab || 'history'); }
+            if (modalId === 'archiveModal') { updateHistoryList(); loadKnowledgeLists(); if(defaultTab) showArchiveTab(defaultTab); }
             else if (modalId === 'testModal') { resetQuizToStartScreen(); }
-            else if (modalId === 'contributeModal') { showContributeTab(defaultTab || 'add'); }
+            else if (modalId === 'contributeModal') { if(defaultTab) showContributeTab(defaultTab); }
             else if (modalId === 'leaderboardModal') { updateLeaderboardDisplay(); }
         }
 
@@ -1990,18 +2146,35 @@
         }
 
         function showContributeTab(tabType) {
-            ['addBattle', 'feedback'].forEach(type => {
-                document.getElementById(`${type}Content`).style.display = 'none';
-                document.getElementById(`${type === 'addBattle' ? 'add' : type}ModalTab`).classList.remove('active');
+            ['add', 'feedback'].forEach(type => {
+                const contentId = (type === 'add') ? 'addBattleContent' : 'feedbackContent';
+                const tabId = (type === 'add') ? 'addBattleModalTab' : 'feedbackModalTab';
+                document.getElementById(contentId).style.display = 'none';
+                document.getElementById(tabId).classList.remove('active');
             });
-            document.getElementById(`${tabType === 'add' ? 'addBattle' : tabType}Content`).style.display = 'block';
-            document.getElementById(`${tabType}ModalTab`).classList.add('active');
+            
+            const selectedContentId = (tabType === 'add') ? 'addBattleContent' : 'feedbackContent';
+            const selectedTabId = (tabType === 'add') ? 'addBattleModalTab' : 'feedbackModalTab';
+            
+            document.getElementById(selectedContentId).style.display = 'block';
+            document.getElementById(selectedTabId).classList.add('active');
         }
         
-        document.getElementById('quizLengthSelect').addEventListener('change', function() {
-            const customInput = document.getElementById('customQuizLengthInput');
-            customInput.style.display = this.value === 'custom' ? 'block' : 'none';
-            if (this.value === 'custom') customInput.focus();
+        document.getElementById('quizLengthSelector').addEventListener('click', function(e) {
+            if (e.target.classList.contains('length-option')) {
+                // Remove active class from all buttons
+                this.querySelectorAll('.length-option').forEach(btn => btn.classList.remove('active'));
+                // Add active class to the clicked button
+                e.target.classList.add('active');
+
+                const customInputContainer = document.querySelector('.custom-length-input-container');
+                if (e.target.dataset.value === 'custom') {
+                    customInputContainer.style.display = 'block';
+                    customInputContainer.querySelector('input').focus();
+                } else {
+                    customInputContainer.style.display = 'none';
+                }
+            }
         });
         
         async function handleFormSubmit(event, successMessage, errorMessage) {
@@ -2014,7 +2187,7 @@
                     headers: { 'Accept': 'application/json' }
                 });
                 if (response.ok) {
-                    alert(successMessage);
+                    showCustomAlert(successMessage, 'success');
                     form.reset();
                     closeModal('contributeModal');
                 } else {
@@ -2024,9 +2197,11 @@
                 alert('ქსელური შეცდომა. გთხოვთ, შეამოწმოთ თქვენი ინტერნეტ კავშირი.');
             }
         }
-
+        
+        // Attaching form submit listeners
         document.getElementById('feedbackForm').addEventListener('submit', (e) => handleFormSubmit(e, 'გმადლობთ უკუკავშირისთვის!', 'დაფიქსირდა შეცდომა.'));
         document.getElementById('addBattleForm').addEventListener('submit', (e) => handleFormSubmit(e, 'გმადლობთ წვლილისთვის!', 'დაფიქსირდა შეცდომა.'));
+        document.getElementById('saveScoreBtn').addEventListener('click', saveScoreAndReset);
 
         document.addEventListener('DOMContentLoaded', () => {
             searchHistory = JSON.parse(localStorage.getItem('searchHistory') || '[]');
@@ -2034,7 +2209,6 @@
             loadKnowledgeLists();
             updateLeaderboardDisplay(); 
             document.getElementById('battleInfo').innerHTML = '<p>შეიყვანეთ წელი და გაიგეთ მეტი ისტორიული ბრძოლების შესახებ!</p>';
-            document.getElementById('totalScoreDisplay').innerHTML = `<i class="fas fa-medal"></i> სულ: ${localStorage.getItem('totalQuizScore') || 0}`;
             pageViews = parseInt(localStorage.getItem('pageViews') || '0');
             isSubscribed = localStorage.getItem('isSubscribed') === 'true';
         });
