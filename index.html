@@ -4,94 +4,228 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ისტორიული ბრძოლები წლების მიხედვით</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400;700&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         /* --- CSS ნაწილი --- */
         :root {
-            --primary-text: #f0f0f0; /* ღია ტექსტი მუქ ფონზე */
-            --secondary-text: #cccccc; /* ოდნავ მუქი ღია ტექსტი */
-            --container-bg: rgba(255, 255, 255, 0.15); /* გამჭვირვალე თეთრი ფონი კონტეინერებისთვის */
-            --modal-bg: rgba(255, 255, 255, 0.1); /* მოდალებისთვის უფრო გამჭვირვალე */
-            --border-light: rgba(255, 255, 255, 0.3); /* ღია საზღვარი */
-            --accent-color: #f7b731; /* Orange-Yellow Accent */
-            --accent-green: #48dbfb; /* ცისფერი აქცენტი (for formspree button, keeping for now) */
-            --shadow-subtle: 0 4px 15px rgba(0, 0, 0, 0.3); /* რბილი ჩრდილი მუქ ფონზე */
-            --shadow-strong: 0 8px 25px rgba(0, 0, 0, 0.5); /* ძლიერი ჩრდილი */
-            --overlay-color: rgba(0, 0, 0, 0.6); /* მუქი გამჭვირვალე ფენა ფოტოზე */
-
-            /* მოდალის შიდა კონტენტის ფონი (უფრო გამჭვირვალე) */
-            --inner-modal-content-bg: rgba(255, 255, 255, 0.08); 
-            --inner-modal-text: #f0f0f0; /* ღია ტექსტი მოდალის შიგნით */
-            --inner-modal-border: rgba(255, 255, 255, 0.2); /* მოდალის შიდა საზღვრები */
+            /* ახალი ფერები: მაღალი კონტრასტი, თვალისთვის სასიამოვნო, მაგრამ თანამედროვე */
+            --primary-bg-overlay: rgba(20, 20, 20, 0.8); /* მუქი, თითქმის გაუმჭვირვალე */
+            --container-bg: rgba(35, 35, 35, 0.95); /* კონტეინერების მუქი, ოდნავ გამჭვირვალე ფონი */
+            --modal-bg: rgba(30, 30, 30, 0.98); /* მოდალის მუქი ფონი */
+            --border-color: rgba(70, 70, 70, 0.7); /* მუქი საზღვარი */
+            --text-primary: #E0E0E0; /* ძირითადი ღია ტექსტი */
+            --text-secondary: #B0B0B0; /* მეორადი ღია ტექსტი */
+            --text-dark: #222222; /* მუქი ტექსტი პაპირუსის ფონზე */
+            --accent-gold: #FFD700; /* ოქროსფერი აქცენტი */
+            --accent-green: #4CAF50; /* მწვანე სწორი პასუხისთვის */
+            --accent-red: #F44336; /* წითელი არასწორი პასუხისთვის */
+            --button-primary: #5A4C3D; /* ღილაკების ფერი (რბილი ყავისფერი) */
+            --button-hover: #7E6A5B; /* ღილაკების hover ფერი */
+            --button-active: #40362D; /* ღილაკების active ფერი */
+            
+            /* სპეციალური ფონი "პაპირუსისთვის" (უცვლელი) */
+            --paper-texture-url: url('https://s.tmimgcdn.com/scr/800x500/331800/vintage-paper-a-graphic-paper-texture-background_331899-original.jpg');
+            
+            /* ჩრდილები და ანიმაციები */
+            --shadow-light: 0 4px 8px rgba(0, 0, 0, 0.4);
+            --shadow-medium: 0 8px 20px rgba(0, 0, 0, 0.6);
+            --transition-fast: 0.2s ease-out;
+            --transition-normal: 0.3s ease;
+            --transition-slow: 0.5s ease-in-out;
         }
 
         /* General resets and base styles */
         body {
-            font-family: 'Inter', sans-serif;
+            font-family: 'Merriweather', serif; /* თანამედროვე, კლასიკური ფონტი */
             margin: 0;
-            padding: 25px;
+            padding: 0;
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center; /* Center vertically */
+            justify-content: flex-start;
             min-height: 100vh;
             box-sizing: border-box;
             line-height: 1.6;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
-
-            background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/c/cb/Henri_IV_%C3%A0_la_bataille_d%27Ivry.jpg/960px-Henri_IV_%C3%A0_la_bataille_d%27Ivry.jpg');
+            color: var(--text-primary);
+            
+            background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/c/cb/Henri_IV_%C3%A0_la_bataille_d%27Ivry.jpg/1920px-Henri_IV_%C3%A0_la_bataille_d%27Ivry.jpg'); /* ფონი უცვლელია */
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
             position: relative;
+            overflow-x: hidden; /* Prevent horizontal scroll on small screens */
             overflow-y: auto;
-            pointer-events: auto; /* Ensure body allows pointer events immediately */
         }
 
+        /* ახალი ფონის გადაფარვა */
         body::before {
             content: '';
-            position: absolute;
+            position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: var(--overlay-color);
+            background-color: var(--primary-bg-overlay); /* ახალი გამჭვირვალე ფონი */
             z-index: -1;
-            pointer-events: none; /* Overlay should not block clicks */
+            pointer-events: none;
         }
 
         .container {
-            background-color: var(--container-bg);
+            background-color: var(--container-bg); /* ახალი გამჭვირვალე ფონი */
             backdrop-filter: blur(5px);
-            padding: 35px 45px;
+            padding: 40px;
             border-radius: 12px;
-            box-shadow: var(--shadow-strong);
+            box-shadow: var(--shadow-medium);
             text-align: center;
-            max-width: 850px;
-            width: 95%;
-            border: 1px solid var(--border-light);
+            max-width: 950px;
+            width: 90%;
+            border: 1px solid var(--border-color);
+            margin-top: 60px;
+            margin-bottom: 80px;
             position: relative;
-            color: var(--primary-text);
-            margin: auto;
-            pointer-events: auto;
-            opacity: 1; /* Ensure immediate visibility */
-            transform: translateY(0); /* Ensure immediate position */
-            transition: none; /* Remove initial transitions */
+            z-index: 1;
+            overflow: hidden;
+            animation: fadeIn var(--transition-slow) ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         h1 {
-            color: var(--primary-text);
-            margin-top: 50px; /* Pushed down as requested */
-            margin-bottom: 30px;
-            font-size: 2.5em;
+            font-family: 'Playfair Display', serif;
+            color: var(--accent-gold);
+            margin-top: 0;
+            margin-bottom: 35px;
+            font-size: 3em;
             font-weight: 700;
-            letter-spacing: -0.5px;
+            letter-spacing: 1px;
             line-height: 1.2;
-            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
+            text-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+            padding-bottom: 15px;
+            position: relative;
+        }
+        h1::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 3px;
+            background-color: var(--accent-gold);
+            border-radius: 2px;
+        }
+        h1 i {
+            margin-right: 15px;
+            color: var(--accent-gold);
         }
 
+        /* Side Navigation - New Placement for Action Buttons */
+        .side-nav {
+            position: fixed;
+            top: 50%;
+            right: 20px; /* ან left: 20px; */
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            z-index: 1000;
+            background-color: var(--container-bg); /* იგივე ფონი რაც კონტეინერს */
+            backdrop-filter: blur(8px);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 15px 10px;
+            box-shadow: var(--shadow-medium);
+            animation: slideInRight 0.7s ease-out forwards;
+        }
+
+        @keyframes slideInRight {
+            from { transform: translateY(-50%) translateX(100px); opacity: 0; }
+            to { transform: translateY(-50%) translateX(0); opacity: 1; }
+        }
+
+        .side-nav .action-button {
+            background: none;
+            border: none;
+            width: 80px; /* უფრო პატარა ღილაკები */
+            height: 80px; /* კვადრატული ზომა */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-primary);
+            font-size: 0.9em;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all var(--transition-normal);
+            position: relative;
+            text-decoration: none;
+        }
+
+        .side-nav .action-button i {
+            font-size: 2.2em; /* აიქონის ზომა */
+            margin-bottom: 8px;
+            color: var(--accent-gold); /* ოქროსფერი აიქონები */
+            transition: color var(--transition-normal), transform var(--transition-normal);
+        }
+
+        .side-nav .action-button .tooltiptext {
+            visibility: hidden;
+            opacity: 0;
+            width: 120px;
+            background-color: rgba(0, 0, 0, 0.85);
+            color: #fff;
+            text-align: center;
+            border-radius: 6px;
+            padding: 8px 0;
+            position: absolute;
+            z-index: 10;
+            right: 110%; /* ტულტიპი მარცხნივ */
+            top: 50%;
+            transform: translateY(-50%);
+            transition: opacity 0.3s, transform 0.3s;
+            font-size: 0.8em;
+            font-family: 'Merriweather', serif;
+            pointer-events: none;
+            white-space: nowrap;
+        }
+
+        .side-nav .action-button .tooltiptext::after {
+            content: "";
+            position: absolute;
+            top: 50%;
+            left: 100%;
+            margin-top: -5px;
+            border-width: 5px;
+            border-style: solid;
+            border-color: transparent transparent transparent rgba(0, 0, 0, 0.85);
+        }
+
+        .side-nav .action-button:hover .tooltiptext {
+            visibility: visible;
+            opacity: 1;
+            transform: translateY(-50%) translateX(-5px);
+        }
+
+        .side-nav .action-button:hover {
+            color: var(--accent-gold);
+            transform: scale(1.05);
+        }
+        .side-nav .action-button:hover i {
+            color: var(--accent-gold);
+            transform: translateY(-3px);
+        }
+        .side-nav .action-button:active {
+            transform: scale(0.98);
+        }
+
+
+        /* Input Section */
         .input-section {
             margin-bottom: 35px;
             display: flex;
@@ -109,456 +243,1156 @@
         }
 
         label {
-            font-size: 0.95em;
-            color: var(--secondary-text);
-            margin-bottom: 8px;
+            font-size: 1.05em;
+            color: var(--text-secondary);
+            margin-bottom: 10px;
             font-weight: 500;
-            text-shadow: 0.5px 0.5px 1px rgba(0, 0, 0, 0.5);
-            pointer-events: auto; /* Ensure labels are interactive */
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        label i {
+            color: var(--accent-gold);
         }
 
-        input[type="text"], input[type="email"], textarea {
+        input[type="text"], input[type="email"], textarea, select, input[type="number"] {
             width: 100%;
-            padding: 14px 18px;
-            border: 1px solid var(--border-light);
+            padding: 12px 18px;
+            border: 1px solid var(--border-color);
             border-radius: 8px;
-            font-size: 1.1em;
+            font-size: 1em;
             box-sizing: border-box;
-            background-color: rgba(255, 255, 255, 0.2);
-            color: var(--primary-text);
-            transition: border-color 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
-            box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.3);
-            pointer-events: auto;
+            background-color: rgba(0, 0, 0, 0.5); /* მუქი, გამჭვირვალე ინფუთის ფონი */
+            color: var(--text-primary);
+            transition: border-color var(--transition-normal), box-shadow var(--transition-normal), background-color var(--transition-normal);
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            box-shadow: inset 0 1px 3px rgba(0,0,0,0.6);
         }
 
-        input[type="text"]::placeholder, input[type="email"]::placeholder, textarea::placeholder {
-            color: var(--secondary-text);
-            opacity: 0.8;
+        input[type="text"]::placeholder, input[type="email"]::placeholder, textarea::placeholder, input[type="number"]::placeholder {
+            color: rgba(220, 220, 220, 0.6);
+            opacity: 1;
         }
 
-        input[type="text"]:focus, input[type="email"]:focus, textarea:focus {
-            border-color: var(--accent-color);
-            box-shadow: 0 0 0 4px rgba(247, 183, 49, 0.3), inset 0 1px 3px rgba(0, 0, 0, 0.3);
-            background-color: rgba(255, 255, 255, 0.3);
+        input[type="text"]:focus, input[type="email"]:focus, textarea:focus, select:focus, input[type="number"]:focus {
+            border-color: var(--accent-gold);
+            box-shadow: 0 0 0 3px rgba(255, 215, 0, 0.3), inset 0 1px 3px rgba(0,0,0,0.6);
             outline: none;
+            background-color: rgba(0, 0, 0, 0.7);
         }
+        
+        /* Specific for select in quiz */
+        select#quizLengthSelect {
+            background-color: rgba(0, 0, 0, 0.5); /* შეხამებული ფერი */
+            color: var(--text-primary);
+            border: 1px solid var(--border-color);
+        }
+        select#quizLengthSelect option {
+            background-color: var(--container-bg); /* option-ებისთვის მუქი ფონი */
+            color: var(--text-primary);
+        }
+
 
         textarea {
             resize: vertical;
-            min-height: 120px;
+            min-height: 100px;
         }
 
         button {
-            padding: 14px 30px;
-            background-color: var(--accent-color);
+            padding: 12px 25px;
+            background-color: var(--button-primary); /* ახალი ღილაკის ფერი */
             color: white;
             border: none;
             border-radius: 8px;
             cursor: pointer;
-            font-size: 1.1em;
+            font-size: 1.05em;
             font-weight: 600;
-            transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
-            box-shadow: var(--shadow-subtle);
+            transition: background-color var(--transition-normal), transform var(--transition-fast), box-shadow var(--transition-normal);
+            box-shadow: var(--shadow-light);
             flex-shrink: 0;
             min-width: 120px;
-            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
-            pointer-events: auto;
+            letter-spacing: 0.5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            font-family: 'Merriweather', serif;
         }
 
         button:hover {
-            background-color: #e6a72e;
+            background-color: var(--button-hover); /* ახალი hover ფერი */
             transform: translateY(-3px);
-            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+            box-shadow: var(--shadow-medium);
         }
 
         button:active {
+            background-color: var(--button-active); /* ახალი active ფერი */
             transform: translateY(0);
-            box-shadow: var(--shadow-subtle);
-        }
-
-        #battleInfo {
-            margin-top: 30px;
-            padding: 25px;
-            background-color: var(--container-bg);
-            backdrop-filter: blur(3px);
-            border-left: 6px solid var(--accent-color);
-            border-radius: 8px;
-            font-size: 1.05em;
-            text-align: left;
-            min-height: 90px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            opacity: 1; /* Immediate visibility */
-            transform: translateY(0); /* Immediate position */
-            box-shadow: var(--shadow-subtle);
-            color: var(--primary-text);
-            text-shadow: 0.5px 0.5px 1px rgba(0, 0, 0, 0.5);
-            border: 1px solid var(--border-light);
-            text-align: center;
-            line-height: 1.8;
-            transition: none; /* Remove initial transitions */
-        }
-
-        /* --- Tabs: History, Add New, and Feedback (Icons) --- */
-        .tab-bar {
-            position: absolute;
-            top: 25px;
-            left: 25px;
-            display: flex;
-            gap: 8px; /* Slightly reduced gap */
-            pointer-events: auto;
-        }
-
-        .tab-toggle-button {
-            background-color: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(3px);
-            border: 1px solid var(--border-light);
-            border-radius: 50%;
-            width: 32px; /* Smaller width */
-            height: 32px; /* Smaller height */
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            cursor: pointer;
-            font-size: 0.85em; /* Smaller icon size */
-            color: var(--secondary-text);
-            transition: background-color 0.2s ease, box-shadow 0.2s ease, color 0.2s ease, transform 0.2s ease;
-            box-shadow: var(--shadow-subtle);
-            text-shadow: 0.5px 0.5px 1px rgba(0, 0, 0, 0.5);
-            background: linear-gradient(145deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.05));
-            pointer-events: auto;
-        }
-
-        .tab-toggle-button:hover {
-            background-color: rgba(255, 255, 255, 0.2);
-            color: var(--primary-text);
-            transform: translateY(-2px);
-        }
-
-        .tab-toggle-button.active {
-            background-color: var(--accent-color);
-            color: white;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-            border-color: var(--accent-color);
-            transform: translateY(0);
+            box-shadow: var(--shadow-light);
         }
         
-        /* Removed specific #addTabButton styling to make it match others as requested */
+        button.success {
+            background-color: var(--accent-green);
+        }
+        button.success:hover {
+            background-color: color-mix(in srgb, var(--accent-green) 80%, black);
+        }
+        button.error {
+            background-color: var(--accent-red);
+        }
+        button.error:hover {
+            background-color: color-mix(in srgb, var(--accent-red) 80%, black);
+        }
+
+        /* "Paper" effect for battleInfo only */
+        .paper-effect {
+            margin-top: 35px;
+            padding: 30px;
+            background-image: var(--paper-texture-url);
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            color: var(--text-dark);
+            border: 2px solid rgba(0, 0, 0, 0.4);
+            border-radius: 12px;
+            font-size: 1.1em;
+            text-align: left;
+            min-height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: var(--shadow-light);
+            line-height: 1.7;
+            text-align: center;
+            transition: all var(--transition-normal);
+            position: relative;
+            overflow: hidden;
+            /* ტექსტის უკეთ წაკითხვისთვის ფონზე */
+            text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.7), -1px -1px 2px rgba(255, 255, 255, 0.7);
+        }
+        .paper-effect p {
+            margin: 0;
+            padding: 0;
+        }
+
+        .knowledge-feedback {
+            margin-top: 30px;
+            display: none;
+            justify-content: center;
+            gap: 20px;
+            padding-top: 25px;
+            border-top: 1px solid var(--border-color);
+            animation: fadeIn 0.5s ease-out forwards;
+        }
+
+        .knowledge-feedback button {
+            background-color: var(--container-bg);
+            color: var(--text-primary);
+            border: 1px solid var(--border-color);
+            font-weight: 500;
+        }
+        .knowledge-feedback button:hover {
+            background-color: var(--button-hover);
+            border-color: var(--button-primary);
+            color: white;
+        }
 
         /* --- Modal Styles --- */
         .modal {
             display: none;
             position: fixed;
-            z-index: 1000;
+            z-index: 1001;
             left: 0;
             top: 0;
             width: 100%;
             height: 100%;
             overflow: auto;
-            background-color: rgba(0, 0, 0, 0.6);
+            background-color: rgba(0, 0, 0, 0.8); /* მუქი გამჭვირვალე ფონი მოდალისთვის */
             justify-content: center;
             align-items: center;
             opacity: 0;
-            transition: opacity 0.3s ease-out; /* Keep fade transition for modals */
-            pointer-events: none; /* Initially disable pointer events for modals */
+            transition: opacity 0.4s ease-out;
+            padding: 20px;
+            box-sizing: border-box;
         }
 
         .modal.show {
             opacity: 1;
             display: flex;
-            pointer-events: auto;
         }
 
         .modal-content {
-            background-color: var(--modal-bg);
-            backdrop-filter: blur(8px);
+            background-color: var(--modal-bg); /* მოდალის ფონი */
+            backdrop-filter: blur(10px);
             padding: 30px;
-            border: 1px solid var(--border-light);
-            border-radius: 12px;
-            width: 85%;
-            max-width: 600px;
-            box-shadow: var(--shadow-strong);
+            border: 1px solid var(--border-color);
+            border-radius: 15px;
+            width: 90%;
+            max-width: 900px;
+            box-shadow: var(--shadow-medium);
             position: relative;
             transform: translateY(20px);
-            animation: slideInModal 0.4s ease-out forwards; /* Keep slide-in for modals */
-            color: var(--primary-text);
-            text-shadow: 0.5px 0.5px 1px rgba(0, 0, 0, 0.5);
-            pointer-events: auto;
+            animation: slideInModal 0.5s ease-out forwards;
+            color: var(--text-primary);
+            text-align: left;
+            overflow-y: auto;
+            max-height: 90vh;
         }
 
         @keyframes slideInModal {
-            from { opacity: 0; transform: translateY(20px); }
+            from { opacity: 0; transform: translateY(30px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
         .close-button {
-            color: var(--secondary-text);
-            float: right;
-            font-size: 28px;
+            color: var(--text-secondary);
+            font-size: 30px;
             font-weight: bold;
-            transition: color 0.2s ease;
+            transition: color var(--transition-fast), transform var(--transition-fast);
             position: absolute;
             top: 15px;
             right: 20px;
-            pointer-events: auto;
+            cursor: pointer;
         }
 
         .close-button:hover,
         .close-button:focus {
-            color: var(--primary-text);
-            text-decoration: none;
-            cursor: pointer;
+            color: var(--accent-red);
+            transform: rotate(90deg);
         }
 
         .modal-content h2 {
-            color: var(--primary-text);
+            font-family: 'Playfair Display', serif;
+            color: var(--accent-gold);
             margin-top: 0;
             margin-bottom: 25px;
-            font-size: 2em;
-            text-align: left;
-            border-bottom: 1px solid var(--border-light);
+            font-size: 2.2em;
+            text-align: center;
             padding-bottom: 15px;
+            line-height: 1.3;
+            text-shadow: 0 2px 5px rgba(0, 0, 0, 0.4);
+            position: relative;
+        }
+        .modal-content h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 2px;
+            background-color: var(--accent-gold);
+            border-radius: 1px;
+        }
+        .modal-content h2 i {
+            margin-right: 10px;
+            color: var(--accent-gold);
         }
 
+        /* Inner Modal Box - now transparent */
         .inner-modal-box {
-            background-color: var(--inner-modal-content-bg);
-            backdrop-filter: blur(5px);
-            border: 1px solid var(--inner-modal-border);
-            border-radius: 8px;
-            padding: 15px;
-            color: var(--inner-modal-text);
-            pointer-events: auto;
+            background-color: rgba(0, 0, 0, 0.3); /* გამჭვირვალე ფონი */
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 25px;
+            color: var(--text-primary);
+            margin-bottom: 20px;
+            box-shadow: var(--shadow-light);
+            position: relative;
+            overflow: hidden;
+        }
+        .inner-modal-box h3 {
+            font-family: 'Playfair Display', serif;
+            color: var(--accent-gold);
+            margin-top: 0;
+            margin-bottom: 20px;
+            font-size: 1.6em;
+            text-align: center;
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+        }
+        .inner-modal-box label {
+            color: var(--text-secondary);
+        }
+        .inner-modal-box input, .inner-modal-box textarea, .inner-modal-box select {
+            background-color: rgba(0, 0, 0, 0.6);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+        }
+        .inner-modal-box input::placeholder, .inner-modal-box textarea::placeholder {
+             color: rgba(220, 220, 220, 0.6);
+        }
+        .inner-modal-box input:focus, .inner-modal-box textarea:focus, .inner-modal-box select:focus {
+            box-shadow: 0 0 0 3px rgba(255, 215, 0, 0.3);
+            background-color: rgba(0, 0, 0, 0.8);
         }
 
-        #historyList {
+        #historyList, #knownBattlesList, #unknownBattlesList, #testQuestions, #testResults, #leaderboardList {
             list-style: none;
             padding: 0;
             margin: 0;
-            max-height: 250px;
+            max-height: 350px;
             overflow-y: auto;
+            scrollbar-width: thin;
+            scrollbar-color: var(--accent-gold) rgba(0, 0, 0, 0.2);
         }
 
-        #historyList li {
-            padding: 12px 18px;
-            border-bottom: 1px solid var(--inner-modal-border);
+        #historyList::-webkit-scrollbar,
+        #knownBattlesList::-webkit-scrollbar,
+        #unknownBattlesList::-webkit-scrollbar,
+        #testQuestions::-webkit-scrollbar,
+        #leaderboardList::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        #historyList::-webkit-scrollbar-track,
+        #knownBattlesList::-webkit-scrollbar-track,
+        #unknownBattlesList::-webkit-scrollbar-track,
+        #testQuestions::-webkit-scrollbar-track,
+        #leaderboardList::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+        }
+
+        #historyList::-webkit-scrollbar-thumb,
+        #knownBattlesList::-webkit-scrollbar-thumb,
+        #unknownBattlesList::-webkit-scrollbar-thumb,
+        #testQuestions::-webkit-scrollbar-thumb,
+        #leaderboardList::-webkit-scrollbar-thumb {
+            background-color: var(--accent-gold);
+            border-radius: 8px;
+            border: 2px solid transparent;
+            background-clip: padding-box;
+        }
+
+        #historyList li, #knownBattlesList li, #unknownBattlesList li, #leaderboardList li {
+            padding: 15px 12px;
+            border-bottom: 1px dashed rgba(70, 70, 70, 0.5);
             cursor: pointer;
-            transition: background-color 0.2s ease, transform 0.1s ease;
+            transition: background-color var(--transition-fast), transform var(--transition-fast);
             display: flex;
             justify-content: space-between;
             align-items: center;
             font-size: 0.95em;
-            pointer-events: auto;
+            color: var(--text-primary);
         }
 
-        #historyList li:last-child {
+        #historyList li:last-child, #knownBattlesList li:last-child, #unknownBattlesList li:last-child, #leaderboardList li:last-child {
             border-bottom: none;
         }
 
-        #historyList li:hover {
-            background-color: rgba(255, 255, 255, 0.15);
+        #historyList li:hover, #knownBattlesList li:hover, #unknownBattlesList li:hover, #leaderboardList li:hover {
+            background-color: rgba(255, 255, 255, 0.05);
             transform: translateX(3px);
         }
 
-        #historyList li span:first-child {
-            font-weight: 600;
-            color: var(--accent-color);
-            font-size: 1.05em;
+        #historyList li span:first-child, #knownBattlesList li span:first-child, #unknownBattlesList li span:first-child {
+            font-weight: 500;
         }
 
-        #historyList li .clear-history-item {
-            color: var(--secondary-text);
+        .clear-history-item {
+            color: var(--accent-red);
             font-size: 0.8em;
             cursor: pointer;
             margin-left: 10px;
-            opacity: 0.7;
-            pointer-events: auto;
+            opacity: 0.8;
+            transition: color var(--transition-fast), opacity var(--transition-fast);
+            display: flex;
+            align-items: center;
+            gap: 4px;
         }
-        #historyList li .clear-history-item:hover {
-            color: #e74c3c;
+        .clear-history-item:hover {
+            color: darkred;
             opacity: 1;
+            transform: scale(1.05);
+        }
+
+        /* --- Modal Tab Navigation (Inside Modals) --- */
+        .modal-tab-nav {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 25px;
+            gap: 10px;
+            flex-wrap: wrap;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 10px;
+        }
+
+        .modal-tab-nav button {
+            background-color: var(--container-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            color: var(--text-primary);
+            padding: 10px 18px;
+            font-size: 0.9em;
+            cursor: pointer;
+            transition: all var(--transition-normal);
+            box-shadow: var(--shadow-light);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .modal-tab-nav button.active {
+            background-color: var(--button-primary); /* აქტიური ტაბის ფერი */
+            color: white;
+            border-color: var(--button-primary);
+            box-shadow: var(--shadow-medium);
+            transform: translateY(-2px);
+        }
+        .modal-tab-nav button:hover {
+            background-color: var(--button-hover);
+            border-color: var(--button-primary);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-medium);
+            color: white;
+        }
+        .modal-tab-nav button.active:hover {
+             background-color: var(--button-primary); /* აქტიური ტაბის hover ფერი */
+             color: white;
         }
 
         /* --- Forms Styles (Feedback, Add Battle) --- */
         #feedbackForm, #addBattleForm {
-            margin-top: 10px;
+            margin-top: 15px;
             display: flex;
             flex-direction: column;
             gap: 15px;
-            pointer-events: auto;
         }
-
-        #feedbackForm label, #addBattleForm label {
-            font-weight: 500;
-            color: var(--inner-modal-text);
-            pointer-events: auto;
-        }
-
-        #feedbackForm button[type="submit"] { /* This specific button remains accent-green for feedback */
-            background-color: var(--accent-green);
+        #feedbackForm button[type="submit"], #addBattleForm button[type="submit"] {
             align-self: flex-end;
-            margin-top: 10px;
-            font-weight: 600;
-            color: white;
-            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
-            pointer-events: auto;
+            margin-top: 15px;
         }
 
-        #feedbackForm button[type="submit"]:hover {
-            background-color: #38c8ff;
-        }
-
-        #addBattleForm button[type="submit"] { /* Add battle button matches main accent color */
-            background-color: var(--accent-color);
-            align-self: flex-end;
-            margin-top: 10px;
-            font-weight: 600;
-            color: white;
-            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
-            pointer-events: auto;
-        }
-        #addBattleForm button[type="submit"]:hover {
-            background-color: #e6a72e;
-        }
-
-        /* --- Footer Styles --- */
-        .footer-info {
-            color: var(--secondary-text);
-            font-size: 0.85em;
-            margin-top: 50px;
+        /* --- Test Section Styles (Revised) --- */
+        #testQuizContainer {
+            min-height: 250px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
             text-align: center;
-            max-width: 700px;
-            padding: 20px;
-            background-color: rgba(0, 0, 0, 0.4);
-            backdrop-filter: blur(3px);
-            border-radius: 8px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            box-shadow: var(--shadow-subtle);
-            line-height: 1.5;
-            text-shadow: 0.5px 0.5px 1px rgba(0, 0, 0, 0.7);
-            pointer-events: auto;
+            gap: 20px;
+            padding: 15px;
         }
 
-        /* Responsive adjustments for mobile */
+        .quiz-start-screen {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 25px;
+            width: 100%;
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .quiz-start-screen label {
+            font-size: 1.1em;
+            font-weight: 500;
+            color: var(--text-secondary); /* ლეიბლის ფერი */
+            margin-bottom: 10px;
+        }
+
+        .quiz-start-screen .input-group {
+            width: 100%;
+            max-width: 300px;
+            margin-bottom: 0;
+            gap: 10px;
+        }
+
+        /* Quiz Content */
+        #quizContent {
+            display: none;
+            width: 100%;
+        }
+
+        .quiz-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+            gap: 15px;
+            padding: 12px;
+            background-color: rgba(0, 0, 0, 0.4); /* მუქი გამჭვირვალე ფონი */
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow-light);
+            animation: fadeIn 0.5s ease-out forwards;
+        }
+        .quiz-controls .score-display {
+            font-size: 1.1em;
+            font-weight: 600;
+            color: var(--accent-gold);
+            min-width: 140px;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+        .quiz-controls .score-display i {
+            font-size: 1.2em;
+            color: var(--accent-gold);
+        }
+        #totalScoreDisplay {
+            color: var(--accent-green);
+        }
+        #totalScoreDisplay i {
+            color: var(--accent-green);
+        }
+
+
+        #questionText {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.6em;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 25px;
+            min-height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            background-color: rgba(0, 0, 0, 0.4); /* მუქი გამჭვირვალე ფონი */
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: var(--shadow-light);
+            line-height: 1.4;
+            position: relative;
+            animation: fadeIn 0.5s ease-out forwards;
+        }
+        #questionText span {
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+        }
+
+
+        .answer-options {
+            width: 100%;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 12px;
+        }
+
+        .answer-options button {
+            width: 100%;
+            background-color: var(--container-bg); /* პასუხის ღილაკების ფონი */
+            color: var(--text-primary);
+            border: 1px solid var(--border-color);
+            padding: 14px 20px;
+            border-radius: 8px;
+            font-size: 0.95em;
+            font-weight: 500;
+            text-align: center;
+            transition: all var(--transition-normal);
+            box-shadow: var(--shadow-light);
+            line-height: 1.4;
+            font-family: 'Merriweather', serif;
+        }
+
+        .answer-options button:hover:not(.disabled) {
+            background-color: var(--button-hover);
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-medium);
+            border-color: var(--button-primary);
+            color: white;
+        }
+
+        .answer-options button.correct {
+            background-color: var(--accent-green);
+            color: white;
+            border-color: var(--accent-green);
+            pointer-events: none;
+            box-shadow: var(--shadow-medium);
+            transform: scale(1.01);
+            animation: pulseCorrect 0.5s ease-out forwards;
+        }
+        @keyframes pulseCorrect {
+            0% { transform: scale(1); box-shadow: var(--shadow-light); }
+            50% { transform: scale(1.02); box-shadow: 0 0 15px var(--accent-green); }
+            100% { transform: scale(1.01); box-shadow: var(--shadow-medium); }
+        }
+
+        .answer-options button.incorrect {
+            background-color: var(--accent-red);
+            color: white;
+            border-color: var(--accent-red);
+            pointer-events: none;
+            box-shadow: var(--shadow-medium);
+            animation: shake 0.3s;
+        }
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            20%, 60% { transform: translateX(-5px); }
+            40%, 80% { transform: translateX(5px); }
+        }
+        
+        .answer-options button.disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        #quizFeedback {
+            margin-top: 15px;
+            font-weight: 600;
+            font-size: 1.1em;
+            min-height: 25px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: var(--text-primary);
+            animation: fadeIn 0.4s ease-out forwards;
+        }
+
+        #nextQuestionButton {
+            margin-top: 20px;
+            padding: 10px 25px;
+            display: none;
+            align-self: center;
+            background-color: var(--button-primary);
+        }
+        #nextQuestionButton:hover {
+            background-color: var(--button-hover);
+        }
+
+        /* Quiz Progress Bar */
+        .quiz-progress-container {
+            width: 100%;
+            background-color: rgba(0, 0, 0, 0.4);
+            border-radius: 5px;
+            height: 8px;
+            margin-top: 20px;
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+            box-shadow: inset 0 1px 3px rgba(0,0,0,0.6);
+        }
+
+        .quiz-progress-bar {
+            height: 100%;
+            width: 0%;
+            background-color: var(--accent-green);
+            border-radius: 5px;
+            transition: width 0.4s ease-out;
+        }
+
+        /* Leaderboard Specific Styles */
+        #leaderboardList li {
+            justify-content: flex-start;
+            gap: 10px;
+        }
+        #leaderboardList li .rank {
+            font-weight: 700;
+            color: var(--accent-gold);
+            min-width: 25px;
+            text-align: right;
+        }
+        #leaderboardList li .name {
+            flex-grow: 1;
+        }
+        #leaderboardList li .score {
+            font-weight: 700;
+            color: var(--accent-green);
+        }
+
+        /* Quiz End Screen Name Input */
+        #quizEndScreen {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+            margin-top: 20px;
+        }
+        #quizEndScreen label {
+            color: var(--text-primary);
+            font-size: 1.1em;
+            font-weight: 500;
+            margin-bottom: 5px;
+        }
+        #quizEndScreen input[type="text"] {
+            background-color: rgba(0, 0, 0, 0.6);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            max-width: 300px;
+            text-align: center;
+        }
+        #quizEndScreen button {
+            background-color: var(--button-primary);
+        }
+        #quizEndScreen button:hover {
+            background-color: var(--button-hover);
+        }
+
+        /* Subscribe Modal */
+        #subscribeModal {
+            display: none; /* Hidden by default */
+            position: fixed;
+            z-index: 2000; /* Higher than other modals */
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.95); /* Very dark, almost opaque */
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.4s ease-out;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        #subscribeModal.show {
+            opacity: 1;
+            display: flex;
+        }
+
+        #subscribeModal .modal-content {
+            background-color: var(--modal-bg);
+            border: 2px solid var(--accent-gold); /* Accent border */
+            box-shadow: 0 0 30px rgba(255, 215, 0, 0.5); /* Glowing effect */
+            text-align: center;
+            padding: 40px;
+            max-width: 600px;
+            color: var(--text-primary);
+            position: relative;
+        }
+
+        #subscribeModal h2 {
+            font-size: 2.5em;
+            color: var(--accent-gold);
+            margin-bottom: 25px;
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.7);
+        }
+
+        #subscribeModal p {
+            font-size: 1.2em;
+            margin-bottom: 30px;
+            line-height: 1.8;
+            color: var(--text-secondary);
+        }
+
+        #subscribeModal .price {
+            font-size: 2.5em;
+            font-weight: 700;
+            color: var(--accent-green);
+            margin-bottom: 30px;
+        }
+
+        #subscribeModal button {
+            background-color: var(--accent-gold);
+            color: var(--text-dark); /* Dark text on gold button */
+            font-size: 1.3em;
+            padding: 15px 30px;
+            border-radius: 10px;
+            transition: all var(--transition-normal);
+        }
+
+        #subscribeModal button:hover {
+            background-color: #FFEA00; /* Lighter gold */
+            transform: scale(1.05) translateY(-5px);
+            box-shadow: 0 10px 20px rgba(255, 215, 0, 0.4);
+        }
+
+        /* --- Footer Info --- */
+        .footer-info {
+            color: var(--text-secondary);
+            font-size: 0.85em;
+            margin-top: 40px;
+            margin-bottom: 30px;
+            text-align: center;
+            max-width: 800px;
+            padding: 20px;
+            background-color: var(--container-bg);
+            backdrop-filter: blur(5px);
+            border-radius: 10px;
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow-light);
+            line-height: 1.5;
+        }
+
+        /* Responsive adjustments */
         @media (max-width: 768px) {
             body {
-                padding: 15px;
+                padding: 0;
+                justify-content: flex-start;
             }
 
             .container {
-                padding: 20px 15px;
-                width: 98%; /* Even wider on small screens */
+                padding: 20px;
+                width: 95%;
+                margin-top: 20px;
+                margin-bottom: 40px;
+                border-radius: 10px;
             }
 
             h1 {
-                font-size: 2em; /* Slightly smaller for mobile */
-                margin-top: 40px; /* Adjust top margin for mobile */
+                font-size: 2em;
+                margin-bottom: 25px;
+                padding-bottom: 10px;
             }
+            h1 i {
+                margin-right: 8px;
+            }
+            h1::after {
+                width: 70px;
+                height: 2px;
+            }
+
+            .side-nav {
+                position: static; /* Fixed to static for mobile */
+                transform: none;
+                flex-direction: row; /* Horizontal for mobile */
+                justify-content: center;
+                gap: 10px;
+                margin-top: 20px; /* Space from top of container */
+                margin-bottom: 20px;
+                width: 100%;
+                padding: 10px;
+                border-radius: 8px;
+                box-sizing: border-box; /* Ensure padding is inside width */
+            }
+            .side-nav .action-button {
+                width: 60px; /* Smaller for mobile */
+                height: 60px;
+                font-size: 0.8em;
+            }
+            .side-nav .action-button i {
+                font-size: 1.8em;
+                margin-bottom: 5px;
+            }
+            .side-nav .action-button .tooltiptext {
+                display: none; /* Hide tooltips on mobile for simplicity */
+            }
+
 
             .input-section {
                 flex-direction: column;
-                align-items: stretch;
                 gap: 15px;
+                margin-bottom: 20px;
             }
 
-            .input-group {
-                width: 100%;
+            input[type="text"], input[type="email"], textarea, button, select, input[type="number"] {
+                padding: 10px 15px;
+                font-size: 0.9em;
+                border-radius: 6px;
             }
 
-            input[type="text"],
-            input[type="email"],
-            textarea,
             button {
-                width: 100%;
-                max-width: none;
-                padding: 12px 15px; /* Slightly less padding for smaller screens */
-                font-size: 1em; /* Smaller font size */
+                padding: 10px 20px;
+                font-size: 0.95em;
+                min-width: 90px;
+                border-radius: 6px;
             }
 
-            .tab-bar {
-                top: 15px;
-                left: 15px;
-                gap: 6px; /* Even smaller gap for mobile */
+            .paper-effect {
+                padding: 15px;
+                font-size: 0.9em;
+                margin-top: 20px;
+                border-radius: 8px;
             }
 
-            .tab-toggle-button {
-                width: 30px; /* Smaller width for mobile icons */
-                height: 30px; /* Smaller height for mobile icons */
-                font-size: 0.8em; /* Smaller icon size for mobile */
+            .knowledge-feedback {
+                flex-direction: column;
+                gap: 10px;
+                padding-top: 15px;
+            }
+            .knowledge-feedback button {
+                padding: 10px 20px;
             }
 
             .modal-content {
-                width: 95%;
-                padding: 20px 15px; /* Adjust padding for mobile modals */
+                padding: 20px 15px;
+                max-width: 95%;
+                max-height: 95vh;
+                border-radius: 12px;
             }
 
             .modal-content h2 {
-                font-size: 1.6em; /* Smaller modal title for mobile */
+                font-size: 1.8em;
+                margin-bottom: 15px;
+                padding-bottom: 10px;
+            }
+            .modal-content h2 i {
+                margin-right: 6px;
+            }
+            .modal-content h2::after {
+                width: 60px;
+                height: 1.5px;
             }
 
-            #historyList {
-                max-height: 200px; /* Adjust max height for mobile history list */
+            .close-button {
+                font-size: 26px;
+                top: 10px;
+                right: 15px;
             }
 
-            #historyList li {
-                padding: 10px 12px;
+            .inner-modal-box {
+                padding: 15px;
+                border-radius: 8px;
+            }
+            .inner-modal-box h3 {
+                font-size: 1.4em;
+                margin-bottom: 15px;
+            }
+
+            #historyList, #knownBattlesList, #unknownBattlesList, #testQuestions, #leaderboardList {
+                max-height: 250px;
+            }
+
+            #historyList li, #knownBattlesList li, #unknownBattlesList li, #leaderboardList li {
+                padding: 12px 8px;
+                font-size: 0.85em;
+            }
+
+            .modal-tab-nav {
+                gap: 8px;
+                margin-bottom: 15px;
+                padding-bottom: 8px;
+            }
+            .modal-tab-nav button {
+                padding: 8px 14px;
+                font-size: 0.8em;
+                border-radius: 5px;
+            }
+
+            #testQuizContainer {
+                min-height: 180px;
+                gap: 15px;
+            }
+
+            .quiz-start-screen {
+                gap: 15px;
+            }
+
+            .quiz-controls {
+                flex-direction: column;
+                gap: 10px;
+                margin-bottom: 15px;
+                padding: 10px;
+            }
+            .quiz-controls .score-display {
+                font-size: 1em;
+                min-width: auto;
+            }
+
+            #questionText {
+                font-size: 1.2em;
+                margin-bottom: 20px;
+                min-height: 60px;
+                padding: 15px;
+            }
+
+            .answer-options {
+                grid-template-columns: 1fr;
+                gap: 8px;
+            }
+
+            .answer-options button {
+                padding: 10px 15px;
                 font-size: 0.9em;
             }
 
+            #quizFeedback {
+                font-size: 0.9em;
+                min-height: 20px;
+            }
+
+            #nextQuestionButton {
+                margin-top: 15px;
+                padding: 8px 20px;
+            }
+
+            .quiz-progress-container {
+                height: 6px;
+                margin-top: 15px;
+            }
+
             .footer-info {
-                margin-top: 30px;
+                margin-top: 25px;
+                margin-bottom: 20px;
                 padding: 15px;
                 font-size: 0.75em;
+                border-radius: 8px;
+            }
+            
+            #subscribeModal .modal-content {
+                padding: 25px;
+            }
+            #subscribeModal h2 {
+                font-size: 2em;
+            }
+            #subscribeModal p {
+                font-size: 1em;
+            }
+            #subscribeModal .price {
+                font-size: 2em;
+            }
+            #subscribeModal button {
+                font-size: 1.1em;
+                padding: 10px 20px;
             }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="tab-bar">
-            <button class="tab-toggle-button" id="historyTabButton" onclick="openModal('historyModal')">
-                <i class="fas fa-book"></i> </button>
-            <button class="tab-toggle-button" id="addTabButton" onclick="openModal('addBattleModal')">
-                <i class="fas fa-plus"></i> </button>
-            <button class="tab-toggle-button" id="feedbackTabButton" onclick="openModal('feedbackModal')">
-                <i class="fas fa-envelope"></i> </button>
-        </div>
+    <div class="side-nav">
+        <button class="action-button" id="archiveButton" onclick="openModal('archiveModal', 'history')">
+            <i class="fas fa-book"></i>
+            <span class="tooltiptext">ძებნის ისტორია</span>
+            არქივი
+        </button>
+        <button class="action-button" id="testButton" onclick="openModal('testModal')">
+            <i class="fas fa-trophy"></i>
+            <span class="tooltiptext">ტესტირება</span>
+            ტესტი
+        </button>
+        <button class="action-button" id="leaderboardButton" onclick="openModal('leaderboardModal')">
+            <i class="fas fa-medal"></i>
+            <span class="tooltiptext">ლიდერბორდი</span>
+            ლიდერები
+        </button>
+        <button class="action-button" id="contributeButton" onclick="openModal('contributeModal', 'add')">
+            <i class="fas fa-plus-circle"></i>
+            <span class="tooltiptext">წვლილის შეტანა</span>
+            წვლილი
+        </button>
+    </div>
 
-        <h1>ისტორიული ბრძოლები წლების მიხედვით</h1>
+    <div class="container">
+        <h1><i class="fas fa-scroll"></i> ისტორიული ბრძოლები <br> წლების მიხედვით</h1>
 
         <div class="input-section">
             <div class="input-group">
-                <label for="yearInput">შეიყვანეთ წელი:</label>
-                <input type="text" id="yearInput" placeholder="(მაგ: 1121)" onkeydown="if(event.keyCode === 13) getBattleInfo()">
+                <label for="yearInput"><i class="fas fa-calendar-alt"></i> შეიყვანეთ წელი:</label>
+                <input type="text" id="yearInput" placeholder="(მაგ: 1121, 480 ძვ. წ.)" onkeydown="if(event.keyCode === 13) getBattleInfo()">
             </div>
-            <button onclick="getBattleInfo()">ძებნა</button>
+            <button onclick="getBattleInfo()"><i class="fas fa-search"></i> ძებნა</button>
         </div>
 
-        <div id="battleInfo">
-            შეიყვანეთ წელი და გაიგეთ მეტი ისტორიული ბრძოლების შესახებ!
+        <div id="battleInfo" class="paper-effect">
+            <p>შეიყვანეთ წელი და გაიგეთ მეტი ისტორიული ბრძოლების შესახებ!</p>
+        </div>
+
+        <div class="knowledge-feedback" id="knowledgeFeedback">
+            <button class="success" onclick="addBattleToKnowledgeList('known')"><i class="fas fa-check-circle"></i> ვიცი</button>
+            <button class="error" onclick="addBattleToKnowledgeList('unknown')"><i class="fas fa-times-circle"></i> არ ვიცი</button>
         </div>
     </div>
 
-    <div id="historyModal" class="modal">
+    <div id="archiveModal" class="modal">
         <div class="modal-content">
-            <span class="close-button" onclick="closeModal('historyModal')">&times;</span>
-            <h2>მოძიებული წლების ისტორია</h2>
+            <span class="close-button" onclick="closeModal('archiveModal')">&times;</span>
+            <h2><i class="fas fa-book-atlas"></i> ცოდნის არქივი</h2>
+            <div class="modal-tab-nav">
+                <button id="historyModalTab" class="active" onclick="showArchiveTab('history')"><i class="fas fa-history"></i> ძებნის ისტორია</button>
+                <button id="knownModalTab" onclick="showArchiveTab('known')"><i class="fas fa-thumbs-up"></i> ვიცი</button>
+                <button id="unknownModalTab" onclick="showArchiveTab('unknown')"><i class="fas fa-question-circle"></i> არ ვიცი</button>
+            </div>
+            <div class="inner-modal-box" id="historyContent">
+                <ul id="historyList"></ul>
+            </div>
+            <div class="inner-modal-box" id="knownBattlesContent" style="display: none;">
+                <ul id="knownBattlesList"></ul>
+            </div>
+            <div class="inner-modal-box" id="unknownBattlesContent" style="display: none;">
+                <ul id="unknownBattlesList"></ul>
+            </div>
+        </div>
+    </div>
+
+    <div id="testModal" class="modal">
+        <div class="modal-content">
+            <span class="close-button" onclick="closeModal('testModal')">&times;</span>
+            <h2><i class="fas fa-graduation-cap"></i> ისტორიული ტესტირება</h2>
+            <div class="inner-modal-box" id="testQuizContainer">
+                <div class="quiz-start-screen" id="quizStartScreen">
+                    <div class="input-group">
+                        <label for="quizLengthSelect"><i class="fas fa-list-ol"></i> კითხვების რაოდენობა:</label>
+                        <select id="quizLengthSelect">
+                            <option value="5">5</option>
+                            <option value="10" selected>10</option>
+                            <option value="15">15</option>
+                            <option value="20">20</option>
+                            <option value="custom">მორგებული</option>
+                        </select>
+                        <input type="number" id="customQuizLengthInput" placeholder="შეიყვანეთ" min="1" style="display: none;">
+                    </div>
+                    <button onclick="startQuiz()"><i class="fas fa-play"></i> ტესტის დაწყება</button>
+                </div>
+
+                <div id="quizContent" style="display: none;">
+                    <div class="quiz-controls">
+                        <div class="score-display" id="quizScore"><i class="fas fa-star"></i> ქულა: 0 / 0</div>
+                        <div class="score-display" id="totalScoreDisplay"><i class="fas fa-medal"></i> სულ: 0</div>
+                    </div>
+                    
+                    <div id="questionText"></div>
+                    <div class="answer-options" id="answerOptions">
+                        </div>
+                    <div id="quizFeedback"></div>
+                    <button id="nextQuestionButton" onclick="handleNextQuestion()"><i class="fas fa-arrow-right"></i> შემდეგი კითხვა</button>
+                    <div class="quiz-progress-container">
+                        <div class="quiz-progress-bar" id="quizProgressBar"></div>
+                    </div>
+                </div>
+
+                <div id="quizEndScreen" style="display: none;">
+                    <p class="inner-modal-box" style="width: 100%;"><i class="fas fa-award"></i> ტესტი დასრულებულია! თქვენ დააგროვეთ <span id="finalQuizScore">0</span> ქულა <span id="finalQuizLength">0</span>-დან.</p>
+                    <div class="input-group">
+                        <label for="playerNameInput"><i class="fas fa-user"></i> შეიყვანეთ თქვენი სახელი ლიდერბორდისთვის:</label>
+                        <input type="text" id="playerNameInput" placeholder="თქვენი სახელი" maxlength="20">
+                    </div>
+                    <button onclick="saveScoreAndReset()"><i class="fas fa-save"></i> ქულის შენახვა და ტესტის დასრულება</button>
+                    <button onclick="resetQuizToStartScreen()" style="margin-top: 10px;"><i class="fas fa-redo-alt"></i> ტესტის თავიდან დაწყება</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="leaderboardModal" class="modal">
+        <div class="modal-content">
+            <span class="close-button" onclick="closeModal('leaderboardModal')">&times;</span>
+            <h2><i class="fas fa-crown"></i> ლიდერბორდი</h2>
             <div class="inner-modal-box">
-                <ul id="historyList">
+                <ul id="leaderboardList">
                     </ul>
             </div>
+            <div style="text-align: center; margin-top: 20px;">
+                <button onclick="clearLeaderboard()" style="background-color: var(--accent-red);"><i class="fas fa-eraser"></i> ლიდერბორდის გასუფთავება</button>
+            </div>
         </div>
     </div>
 
-    <div id="addBattleModal" class="modal">
+    <div id="subscribeModal" class="modal">
         <div class="modal-content">
-            <span class="close-button" onclick="closeModal('addBattleModal')">&times;</span>
-            <h2>დაამატე ბრძოლა (ადმინისთვის)</h2> <div class="inner-modal-box">
-                <form id="addBattleForm" action="https://formspree.io/f/xldnaaqp" method="POST"> <label for="newYearInput">წელი:</label>
+            <h2><i class="fas fa-gem"></i> Premium გამოწერა</h2>
+            <p>თქვენ ნახეთ 10 ბრძოლა. გააგრძელეთ ისტორიის შესწავლა Premium გამოწერით!</p>
+            <p class="price">მხოლოდ 1 ლარი!</p>
+            <button onclick="handleSubscription()"><i class="fas fa-credit-card"></i> გამოწერა</button>
+        </div>
+    </div>
+
+
+    <div id="contributeModal" class="modal">
+        <div class="modal-content">
+            <span class="close-button" onclick="closeModal('contributeModal')">&times;</span>
+            <h2><i class="fas fa-hands-helping"></i> წვლილის შეტანა</h2>
+            <div class="modal-tab-nav">
+                <button id="addBattleModalTab" class="active" onclick="showContributeTab('add')"><i class="fas fa-pen-fancy"></i> დაამატე ბრძოლა</button>
+                <button id="feedbackModalTab" onclick="showContributeTab('feedback')"><i class="fas fa-comment-dots"></i> უკუკავშირი</button>
+            </div>
+            <div class="inner-modal-box" id="addBattleContent">
+                <h3><i class="fas fa-scroll"></i> ბრძოლის დამატება</h3>
+                <form id="addBattleForm" action="https://formspree.io/f/xldnaaqp" method="POST">
+                    <label for="newYearInput">წელი:</label>
                     <input type="text" id="newYearInput" name="Year" placeholder="(მაგ: 1999, 44 ძვ. წ.)" required>
                     
                     <label for="newBattleDescription">აღწერა:</label>
-                    <textarea id="newBattleDescription" name="Description" rows="8" placeholder="აღწერეთ ბრძოლის დეტალები და მისი მნიშვნელობა..." required></textarea>
+                    <textarea id="newBattleDescription" name="Description" rows="6" placeholder="აღწერეთ ბრძოლის დეტალები და მისი მნიშვნელობა..." required></textarea>
                     
                     <label for="newBattleSource">წყარო:</label>
                     <input type="text" id="newBattleSource" name="Source (Optional)" placeholder="წყაროს ბმული ან დასახელება">
@@ -566,16 +1400,11 @@
                     <label for="submitterEmail">თქვენი ელ.ფოსტა (არასავალდებულო, პასუხისთვის):</label>
                     <input type="email" id="submitterEmail" name="Submitter Email" placeholder="ელ.ფოსტა">
                     
-                    <button type="submit">გაგზავნა განსახილველად</button> </form>
+                    <button type="submit"><i class="fas fa-paper-plane"></i> გაგზავნა განსახილველად</button>
+                </form>
             </div>
-        </div>
-    </div>
-
-    <div id="feedbackModal" class="modal">
-        <div class="modal-content">
-            <span class="close-button" onclick="closeModal('feedbackModal')">&times;</span>
-            <h2>გამოგვიგზავნეთ უკუკავშირი</h2>
-            <div class="inner-modal-box">
+            <div class="inner-modal-box" id="feedbackContent" style="display: none;">
+                <h3><i class="fas fa-envelope"></i> გამოგვიგზავნეთ უკუკავშირი</h3>
                 <form id="feedbackForm" action="https://formspree.io/f/xldnaaqp" method="POST">
                     <label for="email">თქვენი ელ.ფოსტა (არასავალდებულო):</label>
                     <input type="email" id="email" name="email" placeholder="ელ.ფოსტა (მაგ. user@example.com)">
@@ -583,17 +1412,17 @@
                     <label for="message">თქვენი შეტყობინება:</label>
                     <textarea id="message" name="message" rows="6" placeholder="აღწერეთ თქვენი შეკითხვა, შენიშვნა ან შეცდომა..." required></textarea>
                     
-                    <button type="submit">გაგზავნა</button>
+                    <button type="submit"><i class="fas fa-paper-plane"></i> გაგზავნა</button>
                 </form>
             </div>
         </div>
     </div>
 
     <div class="footer-info">
-        აქ თქვენ ნახავთ ინფორმაციას ისტორიულ ომებს წლების მიხედვით. <br>
+        <p>აქ თქვენ ნახავთ ინფორმაციას ისტორიულ ომებს წლების მიხედვით.<br>
         ახ. წ. 1 წლიდან დღემდე. <br>
         გთხოვთ გაითვალისწინოთ, რომ საიტი ამჟამად დახვეწის პროცესშია და ყველა ბრძოლა განთავსებული არ არის. <br>
-        გთხოვ მიიღოთ მონაწილეობა თქვენც და + ღილაკით დაამტოთ ისე წელი და ბრძოლა, რომელიც არ არის დამატებული.
+        გთხოვთ მიიღოთ მონაწილეობა თქვენც და <i class="fas fa-plus-circle" style="color: var(--accent-gold);"></i> ღილაკით დაამატოთ ისე წელი და ბრძოლა, რომელიც არ არის დამატებული.</p>
     </div>
 
     <script>
@@ -631,7 +1460,7 @@
             '1469': 'ფერერას ბრძოლა (ივრის ბრძოლა): ივრის ბრძოლა, რომელიც ჰენრი IV-ის გამარჯვებით დასრულდა, 1590 წელს მოხდა. 1469 წელი აღინიშნება ისტორიული მოვლენებით, მათ შორის არაგონის მეფე ფერდინანდ II-ისა და კასტილიის დედოფალ იზაბელა I-ის ქორწინებით, რაც ესპანეთის გაერთიანების დასაწყისი იყო.',
             '1492': 'გრანადის დაცემა: 1492 წელს ქრისტიანულმა ძალებმა აიღეს გრანადა, რამაც დაასრულა რეკონკისტა ესპანეთში. ამ წელს ასევე აღინიშნა ქრისტეფორე კოლუმბის პირველი მოგზაურობა ამერიკაში.',
             '1526': 'მოჰაჩის ბრძოლა: 1526 წელს ოსმალეთის იმპერიამ დაამარცხა უნგრეთის სამეფო, რამაც უნგრეთის დაყოფა და ოსმალეთის ექსპანსია გამოიწვია ცენტრალურ ევროპაში.',
-            '1571': 'ლეპანტოს ბრძოლა: 1571 წელს წმინდა ლიგის ფლოტმა დაამარცხა ოსმალეთის ფლოტი, რამაც შეაჩერა ოსმალეთის საზღვაო ექსპანსია ხმელთაშუა ზღვაში.',
+            '1571': 'ლეპანტოს ბრძოლა: 1571 წელს წმინდა ლიგის ფლოტმა დაამარცხა ოსმალეთის ფლოტი, რამაც შეაჩერა ოსმალეთის საზღვაო ექსპანსია ხმელთვაშუა ზღვაში.',
             '1588': 'ესპანური არმადის დამარცხება: 1588 წელს ინგლისურმა ფლოტმა დაამარცხა ესპანური არმადა, რითაც ინგლისი საზღვაო ძალად იქცა და ესპანეთის ჰეგემონია შესუსტდა.',
             '1590': 'ივრის ბრძოლა: 1590 წელს საფრანგეთის მეფე ანრი IV-მ გადამწყვეტი გამარჯვება მოიპოვა კათოლიკური ლიგის ძალებზე, რაც საფრანგეთის რელიგიური ომების მნიშვნელოვანი ეტაპი იყო.',
             '1648': 'ვესტფალიის ზავი: 1648 წელს დასრულდა ოცდაათწლიანი ომი, რითაც შეიქმნა თანამედროვე ეროვნული სახელმწიფოების სისტემის საფუძველი ევროპაში.',
@@ -662,7 +1491,7 @@
             '1950': 'კორეის ომის დასაწყისი: 1950 წელს ჩრდილოეთ კორეის სამხრეთ კორეაში შეჭრით დაიწყო კორეის ომი.',
             '1954': 'დიენ ბიენ ფუსის ბრძოლა: 1954 წელს ვიეტნამის ძალებმა დაამარცხეს ფრანგები, რამაც დაასრულა საფრანგეთის კოლონიური მმართველობა ინდოჩინეთში.',
             '1962': 'კარიბის კრიზისი: მიუხედავად იმისა, რომ პირდაპირი ბრძოლა არ მომხდარა, 1962 წელს აშშ-სა და საბჭოთა კავშირს შორის ბირთვულმა დაპირისპირებამ მსოფლიო ომის ზღვარზე მიიყვანა.',
-            '1968': 'ტეტის შეტევა: 1968 წელს ვიეტნამის ომის დროს ვიეტკონგისა და ჩრდილოეთ ვიეტნამის არმიის ფართომასშტაბიანმა შეტევამ, მიუხედავად სამხედრო დამარცხებისა, შეცვალა ამერიკული საზოგადოების დამოკიდებულება ომის მიმართ.',
+            '1968': 'ტეტის შეტევა: 1968 წელს ვიეტნამის ომის დროს ვიეტკონგისა და ჩრდილოეთ ვიეტნამის არმიის ფართომასშტაბიანმა შეტევამ, მიუხედავად სამხედრო დამარცხებისა, შეცვალა ამერიკული საზოგადეობის დამოკიდებულება ომის მიმართ.',
             '1989': 'ბერლინის კედლის დაცემა: 1989 წელს ბერლინის კედლის დაცემამ ცივი ომის დასასრული და გერმანიის გაერთიანება მოასწავა.',
             '1991': 'უდაბნოს ქარიშხალი: 1991 წელს აშშ-ის მეთაურობით კოალიციურმა ძალებმა გაათავისუფლეს ქუვეითი ერაყის ოკუპაციისგან, რითაც სპარსეთის ყურის ომი დასრულდა.',
             '2001': '11 სექტემბრის ტერაქტები: 2001 წლის 11 სექტემბერს აშშ-ზე განხორციელდა ტერორისტული თავდასხმები, რამაც გამოიწვია "ტერორიზმთან ომის" დაწყება.',
@@ -672,26 +1501,63 @@
             '2022': 'უკრაინაში სრულმასშტაბიანი შეჭრა: 2022 წლის 24 თებერვალს რუსეთის სრულმასშტაბიანი შეჭრა უკრაინაში, რამაც ევროპაში ფართომასშტაბიანი ომი გამოიწვია.',
             '2024': 'მიმდინარე მოვლენები: 2024 წელს მსოფლიოში გრძელდება გეოპოლიტიკური დაძაბულობა და ლოკალური კონფლიქტები, მათ შორის უკრაინაში მიმდინარე ომი. ასევე, აღინიშნება მნიშვნელოვანი მოვლენები ხელოვნური ინტელექტის განვითარებასა და კლიმატის ცვლილებებთან ბრძოლაში.',
             '2025': 'პროგნოზი: 2025 წელი მოსალოდნელია იყოს მნიშვნელოვანი წელი ტექნოლოგიური პროგრესის, კოსმოსური კვლევებისა და გლობალური თანამშრომლობის კუთხით. შესაძლოა, ახალი გამოწვევებიც გაჩნდეს ჯანდაცვისა და ეკონომიკის სფეროებში.'
-            // შეგიძლია დაამატო კიდევ უამრავი წელი და ფაქტი აქ
         };
 
         let searchHistory = [];
+        let knownBattles = [];
+        let unknownBattles = [];
         const MAX_HISTORY_ITEMS = 10;
+        let lastSearchedBattle = null;
+        let pageViews = 0; // Track battle views
+        const MAX_FREE_VIEWS = 10;
+        let isSubscribed = localStorage.getItem('isSubscribed') === 'true';
+
+        // Quiz variables
+        let currentQuestion = null;
+        let quizScore = 0;
+        let questionsAnswered = 0;
+        let quizLength = 0;
+        let questionsAskedThisQuiz = []; 
+        let leaderboard = JSON.parse(localStorage.getItem('leaderboard')) || []; // Load leaderboard
+
+        const quizEligibleBattles = Object.keys(battlesData).filter(year => {
+            const description = battlesData[year];
+            return description.length > 50 && 
+                   !description.includes('პირველი საუკუნის დასაწყისი') && 
+                   !description.includes('პროგნოზი') && 
+                   !description.includes('მიმდინარე მოვლენები') &&
+                   !description.includes('იულიუს კეისრის მკვლელობა') && 
+                   !description.includes('კარიბის კრიზისი') && 
+                   !description.includes('ბერლინის კედლის დაცემა') &&
+                   !description.includes('ფერერას ბრძოლა (ივრის ბრძოლა)');
+        }).map(year => ({
+            year: year,
+            name: extractBattleName(battlesData[year]),
+            fullDescription: battlesData[year]
+        }));
+
 
         function getBattleInfo() {
+            if (!isSubscribed && pageViews >= MAX_FREE_VIEWS) {
+                openModal('subscribeModal');
+                return;
+            }
+
             let yearInput = document.getElementById('yearInput').value.trim();
             const battleInfoDiv = document.getElementById('battleInfo');
+            const knowledgeFeedbackDiv = document.getElementById('knowledgeFeedback');
 
             let info = '';
             let found = false;
+            let currentBattleKey = null;
 
             yearInput = yearInput.toLowerCase();
             yearInput = yearInput.replace(/ძვ\. ?წ\.?/g, 'bc');
-            yearInput = yearInput.replace(/\s+/g, ' '); // Normalize spaces
+            yearInput = yearInput.replace(/\s+/g, ' ');
 
             let cleanedYear = yearInput.replace(' bc', '');
             
-            let displayYear = yearInput; // For history display
+            let displayYear = yearInput;
 
             if (yearInput.includes('bc')) {
                 displayYear = cleanedYear + ' ძვ. წ.';
@@ -700,33 +1566,52 @@
             }
 
             if (isNaN(parseInt(cleanedYear)) || !cleanedYear) {
-                info = 'გთხოვთ, შეიყვანოთ სწორი წელი.';
-                found = true; // Treat as found for error message handling, but not for history if input is empty
+                info = '<p>გთხოვთ, შეიყვანოთ სწორი წელი.</p>';
+                knowledgeFeedbackDiv.style.display = 'none';
+                lastSearchedBattle = null;
             } else {
                 let actualYearKey = yearInput;
                 if (yearInput.includes('bc')) {
-                    actualYearKey = cleanedYear + ' BC'; // Consistent key for internal lookup
+                    actualYearKey = cleanedYear + ' BC';
                 }
 
                 if (battlesData[actualYearKey]) {
-                    info = battlesData[actualYearKey];
+                    info = `<p>${battlesData[actualYearKey]}</p>`;
                     found = true;
+                    currentBattleKey = actualYearKey;
+                    
+                    if (!isSubscribed) {
+                        pageViews++;
+                        localStorage.setItem('pageViews', pageViews);
+                        if (pageViews >= MAX_FREE_VIEWS) {
+                            openModal('subscribeModal');
+                        }
+                    }
+
                 } else {
-                    // Removed `addedBattles` lookup as they are now admin-only
+                    info = `<p>ამ წლისთვის (${displayYear.toUpperCase()}) ინფორმაცია არ მოიძებნა ან ჯერ არ არის დამატებული. სცადეთ მაგალითები: 1121, 1066, 1942, 480 ძვ. წ.</p>`;
+                    knowledgeFeedbackDiv.style.display = 'none';
+                    lastSearchedBattle = null;
                 }
             }
             
-            if (!found) {
-                info = `ამ წლისთვის (${displayYear.toUpperCase()}) ინფორმაცია არ მოიძებნა ან ჯერ არ არის დამატებული. სცადეთ მაგალითები: 1, 1121, 1066, 1942, 480 ძვ. წ.`;
-            }
-
             battleInfoDiv.innerHTML = info;
 
-            // Add to history only if a valid year was searched (even if no info found for it)
+            if (currentBattleKey) {
+                lastSearchedBattle = {
+                    year: displayYear,
+                    key: currentBattleKey,
+                    description: battlesData[currentBattleKey]
+                };
+                knowledgeFeedbackDiv.style.display = 'flex';
+            } else {
+                 knowledgeFeedbackDiv.style.display = 'none';
+            }
+
             if (yearInput && !isNaN(parseInt(cleanedYear))) { 
                 const historyItemToStore = {
-                    year: displayYear, // Display format for history
-                    key: yearInput // Raw input for re-search
+                    year: displayYear,
+                    key: yearInput
                 };
 
                 const existingIndex = searchHistory.findIndex(item => item.key === historyItemToStore.key);
@@ -740,6 +1625,7 @@
                 if (searchHistory.length > MAX_HISTORY_ITEMS) {
                     searchHistory.pop();
                 }
+                localStorage.setItem('searchHistory', JSON.stringify(searchHistory));
                 updateHistoryList();
             }
         }
@@ -750,111 +1636,563 @@
 
             if (searchHistory.length === 0) {
                 const emptyItem = document.createElement('li');
-                emptyItem.textContent = 'ისტორია ცარიელია.';
+                emptyItem.innerHTML = '<i class="fas fa-hourglass-empty"></i> ისტორია ცარიელია.';
                 emptyItem.style.justifyContent = 'center';
-                emptyItem.style.color = 'var(--inner-modal-text)';
+                emptyItem.style.color = 'var(--text-primary)';
                 historyList.appendChild(emptyItem);
                 return;
             }
 
             searchHistory.forEach((item, index) => {
                 const listItem = document.createElement('li');
-                listItem.innerHTML = `<span>${item.year.toUpperCase()}</span> <span class="clear-history-item" data-index="${index}">წაშლა</span>`;
+                listItem.innerHTML = `<span>${item.year.toUpperCase()}</span> <span class="clear-history-item" data-index="${index}" data-list="history"><i class="fas fa-trash-alt"></i> წაშლა</span>`;
                 
                 listItem.querySelector('span').onclick = () => {
                     document.getElementById('yearInput').value = item.key;
                     getBattleInfo();
-                    closeModal('historyModal');
+                    closeModal('archiveModal');
                 };
 
                 listItem.querySelector('.clear-history-item').onclick = (e) => {
                     e.stopPropagation();
-                    removeHistoryItem(parseInt(e.target.dataset.index));
+                    removeListItem('history', parseInt(e.currentTarget.dataset.index));
                 };
                 historyList.appendChild(listItem);
             });
         }
 
-        function removeHistoryItem(index) {
-            searchHistory.splice(index, 1);
-            updateHistoryList();
+        function addBattleToKnowledgeList(type) {
+            if (!lastSearchedBattle) {
+                alert('ჯერ მოძებნეთ ბრძოლა!');
+                return;
+            }
+
+            const list = type === 'known' ? knownBattles : unknownBattles;
+            const otherList = type === 'known' ? unknownBattles : knownBattles;
+
+            if (list.some(item => item.key === lastSearchedBattle.key)) {
+                alert(`ეს ბრძოლა უკვე დამატებულია "${type === 'known' ? 'ვიცი' : 'არ ვიცი'}" სიაში.`);
+                return;
+            }
+
+            const otherIndex = otherList.findIndex(item => item.key === lastSearchedBattle.key);
+            if (otherIndex !== -1) {
+                otherList.splice(otherIndex, 1);
+            }
+
+            list.unshift(lastSearchedBattle);
+
+            localStorage.setItem('knownBattles', JSON.stringify(knownBattles));
+            localStorage.setItem('unknownBattles', JSON.stringify(unknownBattles));
+
+            alert(`ბრძოლა "${lastSearchedBattle.year}" დაემატა "${type === 'known' ? 'ვიცი' : 'არ ვიცი'}" სიაში!`);
+            updateKnowledgeLists();
         }
 
-        // --- Tab and Modal Functions ---
-        const historyModal = document.getElementById('historyModal');
-        const addBattleModal = document.getElementById('addBattleModal');
-        const feedbackModal = document.getElementById('feedbackModal');
+        function updateKnowledgeLists() {
+            updateListDisplay('knownBattlesList', knownBattles, 'known');
+            updateListDisplay('unknownBattlesList', unknownBattles, 'unknown');
+        }
 
-        const historyTabButton = document.getElementById('historyTabButton');
-        const addTabButton = document.getElementById('addTabButton');
-        const feedbackTabButton = document.getElementById('feedbackTabButton');
+        function updateListDisplay(ulId, dataList, type) {
+            const ul = document.getElementById(ulId);
+            ul.innerHTML = '';
 
-        function openModal(modalId) {
-            // Close all modals first
-            historyModal.classList.remove('show');
-            addBattleModal.classList.remove('show');
-            feedbackModal.classList.remove('show');
-            
-            historyModal.style.display = 'none';
-            addBattleModal.style.display = 'none';
-            feedbackModal.style.display = 'none';
-
-            // Remove active class from all buttons
-            historyTabButton.classList.remove('active');
-            addTabButton.classList.remove('active');
-            feedbackTabButton.classList.remove('active');
-
-            // Open desired modal and mark button active
-            if (modalId === 'historyModal') {
-                historyModal.style.display = 'flex';
-                historyModal.classList.add('show');
-                historyTabButton.classList.add('active');
-                updateHistoryList();
-            } else if (modalId === 'addBattleModal') {
-                addBattleModal.style.display = 'flex';
-                addBattleModal.classList.add('show');
-                addTabButton.classList.add('active');
-                // Clear form when opening
-                document.getElementById('newYearInput').value = '';
-                document.getElementById('newBattleDescription').value = '';
-                document.getElementById('newBattleSource').value = '';
-                document.getElementById('submitterEmail').value = ''; // Clear new email field
-            } 
-            else if (modalId === 'feedbackModal') {
-                feedbackModal.style.display = 'flex';
-                feedbackModal.classList.add('show');
-                feedbackTabButton.classList.add('active');
+            if (dataList.length === 0) {
+                const emptyItem = document.createElement('li');
+                emptyItem.innerHTML = `<i class="fas fa-folder-open"></i> "${type === 'known' ? 'ვიცი' : 'არ ვიცი'}" სია ცარიელია.`;
+                emptyItem.style.justifyContent = 'center';
+                emptyItem.style.color = 'var(--text-primary)';
+                ul.appendChild(emptyItem);
+                return;
             }
+
+            dataList.forEach((item, index) => {
+                const listItem = document.createElement('li');
+                listItem.innerHTML = `<span>${item.year.toUpperCase()} - ${extractBattleName(item.description)}</span> <span class="clear-history-item" data-index="${index}" data-list="${type}"><i class="fas fa-trash-alt"></i> წაშლა</span>`;
+                
+                listItem.querySelector('span').onclick = () => {
+                    document.getElementById('yearInput').value = item.key;
+                    getBattleInfo();
+                    closeModal('archiveModal');
+                };
+
+                listItem.querySelector('.clear-history-item').onclick = (e) => {
+                    e.stopPropagation();
+                    removeListItem(type, parseInt(e.currentTarget.dataset.index));
+                };
+                ul.appendChild(listItem);
+            });
+        }
+
+        function removeListItem(listType, index) {
+            if (listType === 'history') {
+                searchHistory.splice(index, 1);
+                localStorage.setItem('searchHistory', JSON.stringify(searchHistory));
+                updateHistoryList();
+            } else if (listType === 'known') {
+                knownBattles.splice(index, 1);
+                localStorage.setItem('knownBattles', JSON.stringify(knownBattles));
+                updateKnowledgeLists();
+            } else if (listType === 'unknown') {
+                unknownBattles.splice(index, 1);
+                localStorage.setItem('unknownBattles', JSON.stringify(unknownBattles));
+                updateKnowledgeLists();
+            }
+        }
+
+        function loadKnowledgeLists() {
+            const storedKnown = localStorage.getItem('knownBattles');
+            const storedUnknown = localStorage.getItem('unknownBattles');
+            if (storedKnown) {
+                knownBattles = JSON.parse(storedKnown);
+            }
+            if (storedUnknown) {
+                unknownBattles = JSON.parse(storedUnknown);
+            }
+            updateKnowledgeLists();
+        }
+
+        // --- Quiz Functions ---
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+
+        function extractBattleName(description) {
+            let name = description.split(':')[0].trim();
+            if (name.length > 40) {
+                const firstSentenceEnd = name.indexOf('.');
+                if (firstSentenceEnd !== -1 && firstSentenceEnd < 40) {
+                    name = name.substring(0, firstSentenceEnd).trim();
+                } else {
+                    const commaIndex = name.indexOf(',');
+                    if (commaIndex !== -1 && commaIndex > 10 && commaIndex < 40) {
+                         name = name.substring(0, commaIndex).trim();
+                    } else {
+                        const words = name.split(' ');
+                        if (words.length > 5) {
+                            name = words.slice(0, 5).join(' ');
+                        }
+                    }
+                }
+            }
+            name = name.replace(/[,.!?]$/, '');
+            if (name.toLowerCase().startsWith('ბრძოლა ')) {
+                name = name.substring('ბრძოლა '.length);
+            } else if (name.toLowerCase().startsWith('ალყა ')) {
+                name = name.substring('ალყა '.length);
+            }
+            return name;
+        }
+
+        function startQuiz() {
+            const quizLengthSelect = document.getElementById('quizLengthSelect');
+            const customQuizLengthInput = document.getElementById('customQuizLengthInput');
+            
+            if (quizLengthSelect.value === 'custom') {
+                quizLength = parseInt(customQuizLengthInput.value);
+                if (isNaN(quizLength) || quizLength <= 0) {
+                    alert('გთხოვთ, შეიყვანოთ კითხვების სწორი რაოდენობა.');
+                    return;
+                }
+            } else {
+                quizLength = parseInt(quizLengthSelect.value);
+            }
+
+            if (quizEligibleBattles.length < quizLength) {
+                 alert(`ბოდიშს გიხდით, არ არის საკმარისი უნიკალური ბრძოლა ${quizLength} კითხვების ტესტისთვის. გთხოვთ, შეამციროთ რაოდენობა ან დაამატოთ მეტი ბრძოლა.`);
+                 return;
+            }
+
+            document.getElementById('quizStartScreen').style.display = 'none';
+            document.getElementById('quizEndScreen').style.display = 'none'; // Ensure end screen is hidden
+            document.getElementById('quizContent').style.display = 'block';
+
+            quizScore = 0;
+            questionsAnswered = 0;
+            questionsAskedThisQuiz = [];
+            document.getElementById('quizScore').innerHTML = `<i class="fas fa-star"></i> ქულა: ${quizScore} / ${questionsAnswered}`;
+            document.getElementById('totalScoreDisplay').innerHTML = `<i class="fas fa-medal"></i> სულ: ${localStorage.getItem('totalQuizScore') || 0}`;
+            updateProgressBar();
+            generateQuestion();
+        }
+
+        function generateQuestion() {
+            if (questionsAnswered >= quizLength) {
+                endQuiz();
+                return;
+            }
+
+            document.getElementById('quizFeedback').textContent = '';
+            document.getElementById('nextQuestionButton').style.display = 'none';
+
+            const availableBattles = quizEligibleBattles.filter(battle => !questionsAskedThisQuiz.includes(battle.year));
+            
+            if (availableBattles.length < 4) {
+                document.getElementById('questionText').innerHTML = "<p><i class='fas fa-exclamation-triangle'></i> საკმარისი უნიკალური ბრძოლები არ არის ტესტისთვის. გთხოვთ, დაამატოთ მეტი ან გაიმეორეთ ტესტი.</p>";
+                document.getElementById('answerOptions').innerHTML = '';
+                return;
+            }
+            
+            const randomIndex = Math.floor(Math.random() * availableBattles.length);
+            const correctBattle = availableBattles[randomIndex];
+            questionsAskedThisQuiz.push(correctBattle.year);
+
+            let questionType;
+            const hasYearInfo = correctBattle.year && !isNaN(parseInt(correctBattle.year));
+            const hasNameInfo = correctBattle.name && correctBattle.name.length > 3;
+
+            if (!hasYearInfo && !hasNameInfo) {
+                questionType = null; 
+            } else if (!hasYearInfo) {
+                questionType = 'nameByYear'; 
+            } else if (!hasNameInfo) {
+                questionType = 'yearByName'; 
+            } else {
+                questionType = Math.random() < 0.5 ? 'yearByName' : 'nameByYear';
+            }
+
+            if (!questionType) {
+                 document.getElementById('questionText').innerHTML = "<p><i class='fas fa-exclamation-triangle'></i> პრობლემა კითხვის გენერაციასთან. გადაახალისეთ გვერდი.</p>";
+                 document.getElementById('answerOptions').innerHTML = '';
+                 return;
+            }
+
+            currentQuestion = {
+                correctYear: correctBattle.year,
+                correctName: correctBattle.name,
+                correctFullDescription: correctBattle.fullDescription,
+                type: questionType
+            };
+
+            let options = [];
+            const otherBattles = quizEligibleBattles.filter(b => b.year !== correctBattle.year);
+
+            if (questionType === 'yearByName') {
+                document.getElementById('questionText').innerHTML = `<p><i class="fas fa-question"></i> რომელ წელს მოხდა "<span>${currentQuestion.correctName}</span>"?</p>`;
+                options.push(currentQuestion.correctYear);
+
+                let incorrectYears = [];
+                let attempts = 0;
+                while (incorrectYears.length < 3 && attempts < 100) {
+                    const randomOtherBattle = otherBattles[Math.floor(Math.random() * otherBattles.length)];
+                    if (randomOtherBattle && randomOtherBattle.year && randomOtherBattle.year !== currentQuestion.correctYear && !incorrectYears.includes(randomOtherBattle.year)) {
+                        incorrectYears.push(randomOtherBattle.year);
+                    }
+                    attempts++;
+                }
+                options = options.concat(incorrectYears);
+
+            } else { // nameByYear
+                document.getElementById('questionText').innerHTML = `<p><i class="fas fa-question"></i> რომელი ბრძოლა მოხდა <span>${currentQuestion.correctYear.toUpperCase()}</span> წელს?</p>`;
+                options.push(currentQuestion.correctName);
+
+                let incorrectNames = [];
+                let attempts = 0;
+                while (incorrectNames.length < 3 && attempts < 100) {
+                    const randomOtherBattle = otherBattles[Math.floor(Math.random() * otherBattles.length)];
+                    if (randomOtherBattle && randomOtherBattle.name && randomOtherBattle.name !== currentQuestion.correctName && !incorrectNames.includes(randomOtherBattle.name)) {
+                        incorrectNames.push(randomOtherBattle.name);
+                    }
+                    attempts++;
+                }
+                options = options.concat(incorrectNames);
+            }
+            
+            shuffleArray(options);
+
+            const answerOptionsDiv = document.getElementById('answerOptions');
+            answerOptionsDiv.innerHTML = '';
+
+            answerOptionsDiv.innerHTML = ''; // Clear previous options
+            options.forEach(option => {
+                const button = document.createElement('button');
+                button.textContent = option;
+                button.onclick = () => checkAnswer(option, currentQuestion.type);
+                answerOptionsDiv.appendChild(button);
+            });
+        }
+
+        function checkAnswer(selectedOption, questionType) {
+            const feedbackDiv = document.getElementById('quizFeedback');
+            const answerButtons = document.querySelectorAll('#answerOptions button');
+            const nextButton = document.getElementById('nextQuestionButton');
+
+            let isCorrect = false;
+            let correctAnswerText = '';
+
+            if (questionType === 'yearByName') {
+                isCorrect = (selectedOption === currentQuestion.correctYear);
+                correctAnswerText = currentQuestion.correctYear;
+            } else { // nameByYear
+                isCorrect = (selectedOption === currentQuestion.correctName);
+                correctAnswerText = currentQuestion.correctName;
+            }
+
+            answerButtons.forEach(button => {
+                button.classList.add('disabled');
+                let buttonValue = button.textContent;
+
+                if (((questionType === 'yearByName') && (buttonValue === currentQuestion.correctYear)) ||
+                    ((questionType === 'nameByYear') && (buttonValue === currentQuestion.correctName))) {
+                    button.classList.add('correct');
+                } else if (buttonValue === selectedOption && !isCorrect) {
+                    button.classList.add('incorrect');
+                }
+                button.onclick = null;
+            });
+
+            if (isCorrect) {
+                feedbackDiv.innerHTML = '<i class="fas fa-check-circle"></i> სწორია! 🎉';
+                feedbackDiv.style.color = 'var(--accent-green)';
+                quizScore++;
+            } else {
+                feedbackDiv.innerHTML = `<i class="fas fa-times-circle"></i> არასწორია. სწორი პასუხია: "<span>${correctAnswerText}</span>"`;
+                feedbackDiv.style.color = 'var(--accent-red)';
+            }
+            questionsAnswered++;
+            document.getElementById('quizScore').innerHTML = `<i class="fas fa-star"></i> ქულა: ${quizScore} / ${questionsAnswered}`;
+            
+            nextButton.textContent = (questionsAnswered < quizLength) ? 'შემდეგი კითხვა' : 'ტესტის დასრულება';
+            nextButton.style.display = 'flex';
+            updateProgressBar();
+        }
+
+        function handleNextQuestion() {
+            if (questionsAnswered >= quizLength) {
+                endQuiz();
+            } else {
+                generateQuestion();
+            }
+        }
+
+        function endQuiz() {
+            document.getElementById('quizContent').style.display = 'none';
+            document.getElementById('quizEndScreen').style.display = 'flex';
+            document.getElementById('finalQuizScore').textContent = quizScore;
+            document.getElementById('finalQuizLength').textContent = quizLength;
+            
+            // Set default player name if possible, or leave empty
+            document.getElementById('playerNameInput').value = `მოთამაშე ${Math.floor(Math.random() * 1000)}`;
+        }
+
+        function saveScoreAndReset() {
+            const playerName = document.getElementById('playerNameInput').value.trim();
+            if (!playerName) {
+                alert('გთხოვთ, შეიყვანოთ თქვენი სახელი!');
+                return;
+            }
+
+            let currentLeaderboard = JSON.parse(localStorage.getItem('leaderboard')) || [];
+            currentLeaderboard.push({ name: playerName, score: quizScore, date: new Date().toLocaleString() });
+            
+            // Sort by score in descending order
+            currentLeaderboard.sort((a, b) => b.score - a.score);
+
+            // Keep only top 10 (or desired number)
+            currentLeaderboard = currentLeaderboard.slice(0, 10); 
+
+            localStorage.setItem('leaderboard', JSON.stringify(currentLeaderboard));
+            updateLeaderboardDisplay();
+            
+            // Update total score
+            let totalScore = parseInt(localStorage.getItem('totalQuizScore')) || 0;
+            totalScore += quizScore;
+            localStorage.setItem('totalQuizScore', totalScore);
+            document.getElementById('totalScoreDisplay').innerHTML = `<i class="fas fa-medal"></i> სულ: ${totalScore}`;
+
+            resetQuizToStartScreen();
+            closeModal('testModal');
+            openModal('leaderboardModal'); // Open leaderboard after saving score
+        }
+
+        function updateProgressBar() {
+            const progressBar = document.getElementById('quizProgressBar');
+            const progress = (questionsAnswered / quizLength) * 100;
+            progressBar.style.width = `${progress}%`;
+        }
+
+        function resetQuizToStartScreen() {
+            document.getElementById('quizStartScreen').style.display = 'flex';
+            document.getElementById('quizContent').style.display = 'none';
+            document.getElementById('quizEndScreen').style.display = 'none';
+            document.getElementById('quizLengthSelect').value = '10';
+            document.getElementById('customQuizLengthInput').style.display = 'none';
+            document.getElementById('customQuizLengthInput').value = '';
+            document.getElementById('playerNameInput').value = '';
+            document.getElementById('quizScore').innerHTML = `<i class="fas fa-star"></i> ქულა: 0 / 0`; // Reset score display
+            document.getElementById('quizProgressBar').style.width = '0%'; // Reset progress bar
+            document.getElementById('quizFeedback').textContent = ''; // Clear feedback
+            document.getElementById('answerOptions').innerHTML = ''; // Clear answer buttons
+        }
+
+        // --- Leaderboard Functions ---
+        function updateLeaderboardDisplay() {
+            const leaderboardList = document.getElementById('leaderboardList');
+            leaderboardList.innerHTML = '';
+            
+            let currentLeaderboard = JSON.parse(localStorage.getItem('leaderboard')) || [];
+
+            if (currentLeaderboard.length === 0) {
+                const emptyItem = document.createElement('li');
+                emptyItem.innerHTML = '<i class="fas fa-sad-tear"></i> ლიდერბორდი ცარიელია.';
+                emptyItem.style.justifyContent = 'center';
+                emptyItem.style.color = 'var(--text-primary)';
+                leaderboardList.appendChild(emptyItem);
+                return;
+            }
+
+            currentLeaderboard.forEach((entry, index) => {
+                const listItem = document.createElement('li');
+                listItem.innerHTML = `<span class="rank">${index + 1}.</span> <span class="name">${entry.name}</span> <span class="score">${entry.score} ქულა</span> <span class="date">(${entry.date})</span>`;
+                leaderboardList.appendChild(listItem);
+            });
+        }
+
+        function clearLeaderboard() {
+            if (confirm('ნამდვილად გსურთ ლიდერბორდის გასუფთავება?')) {
+                localStorage.removeItem('leaderboard');
+                localStorage.setItem('totalQuizScore', 0); // Clear total score too
+                document.getElementById('totalScoreDisplay').innerHTML = `<i class="fas fa-medal"></i> სულ: 0`;
+                updateLeaderboardDisplay();
+            }
+        }
+
+        // --- Subscription Functions ---
+        function handleSubscription() {
+            // In a real application, this would integrate with a payment gateway.
+            // For this example, we'll simulate a successful subscription.
+            isSubscribed = true;
+            localStorage.setItem('isSubscribed', 'true');
+            pageViews = 0; // Reset free views counter after subscription
+            localStorage.setItem('pageViews', pageViews);
+            alert('გამოწერა წარმატებით გააქტიურდა! გმადლობთ მხარდაჭერისთვის.');
+            closeModal('subscribeModal');
+        }
+
+
+        // --- Tab and Modal Functions ---
+        const archiveModal = document.getElementById('archiveModal');
+        const testModal = document.getElementById('testModal');
+        const contributeModal = document.getElementById('contributeModal');
+        const leaderboardModal = document.getElementById('leaderboardModal'); 
+        const subscribeModal = document.getElementById('subscribeModal'); // New subscribe modal
+
+        const historyContent = document.getElementById('historyContent');
+        const knownBattlesContent = document.getElementById('knownBattlesContent');
+        const unknownBattlesContent = document.getElementById('unknownBattlesContent');
+
+        const historyModalTab = document.getElementById('historyModalTab');
+        const knownModalTab = document.getElementById('knownModalTab');
+        const unknownModalTab = document.getElementById('unknownModalTab');
+
+        const addBattleContent = document.getElementById('addBattleContent');
+        const feedbackContent = document.getElementById('feedbackContent');
+
+        const addBattleModalTab = document.getElementById('addBattleModalTab');
+        const feedbackModalTab = document.getElementById('feedbackModalTab');
+
+
+        function openModal(modalId, defaultTab = null) {
+            [archiveModal, testModal, contributeModal, leaderboardModal, subscribeModal].forEach(modal => { 
+                modal.classList.remove('show');
+                modal.style.display = 'none';
+            });
+            
+            const modal = document.getElementById(modalId);
+            modal.style.display = 'flex';
+            setTimeout(() => modal.classList.add('show'), 10);
+
+            if (modalId === 'archiveModal') {
+                updateHistoryList();
+                loadKnowledgeLists();
+                showArchiveTab(defaultTab || 'history');
+            } else if (modalId === 'testModal') {
+                resetQuizToStartScreen(); // Always start with the selection screen
+            } else if (modalId === 'contributeModal') {
+                showContributeTab(defaultTab || 'add');
+                document.getElementById('addBattleForm').reset();
+                document.getElementById('feedbackForm').reset();
+            } else if (modalId === 'leaderboardModal') { 
+                updateLeaderboardDisplay();
+            }
+            // No specific action needed for subscribeModal on open beyond display
         }
 
         function closeModal(modalId) {
-            if (modalId === 'historyModal') {
-                historyModal.classList.remove('show');
-                historyTabButton.classList.remove('active');
-                historyModal.style.display = 'none'; // Hide immediately after animation starts
-            } else if (modalId === 'addBattleModal') {
-                addBattleModal.classList.remove('show');
-                addTabButton.classList.remove('active');
-                addBattleModal.style.display = 'none';
-            } else if (modalId === 'feedbackModal') {
-                feedbackModal.classList.remove('show');
-                feedbackTabButton.classList.remove('active');
-                feedbackModal.style.display = 'none';
+            const modal = document.getElementById(modalId);
+            modal.classList.remove('show');
+            setTimeout(() => {
+                modal.style.display = 'none';
+            }, 300);
+        }
+
+        function showArchiveTab(tabType) {
+            historyContent.style.display = 'none';
+            knownBattlesContent.style.display = 'none';
+            unknownBattlesContent.style.display = 'none';
+
+            historyModalTab.classList.remove('active');
+            knownModalTab.classList.remove('active');
+            unknownModalTab.classList.remove('active');
+
+            if (tabType === 'history') {
+                historyContent.style.display = 'block';
+                historyModalTab.classList.add('active');
+            } else if (tabType === 'known') {
+                knownBattlesContent.style.display = 'block';
+                knownModalTab.classList.add('active');
+            } else if (tabType === 'unknown') {
+                unknownBattlesContent.style.display = 'block';
+                unknownModalTab.classList.add('active');
             }
         }
 
-        // Close when clicking outside the modal
+        function showContributeTab(tabType) {
+            addBattleContent.style.display = 'none';
+            feedbackContent.style.display = 'none';
+
+            addBattleModalTab.classList.remove('active');
+            feedbackModalTab.classList.remove('active');
+
+            if (tabType === 'add') {
+                addBattleContent.style.display = 'block';
+                addBattleModalTab.classList.add('active');
+            } else if (tabType === 'feedback') {
+                feedbackContent.style.display = 'block';
+                feedbackModalTab.classList.add('active');
+            }
+        }
+
         window.onclick = function(event) {
-            if (event.target == historyModal) {
-                closeModal('historyModal');
-            } else if (event.target == addBattleModal) {
-                closeModal('addBattleModal');
-            } else if (event.target == feedbackModal) {
-                closeModal('feedbackModal');
+            if (event.target == archiveModal) {
+                closeModal('archiveModal');
+            } else if (event.target == testModal) {
+                closeModal('testModal');
+            } else if (event.target == contributeModal) {
+                closeModal('contributeModal');
+            } else if (event.target == leaderboardModal) { 
+                closeModal('leaderboardModal');
+            } else if (event.target == subscribeModal) { // Prevent closing subscribe modal by clicking outside
+                // Do nothing for subscribeModal to force interaction
             }
         }
         
-        // Formspree submission (AJAX) for Feedback
+        document.getElementById('quizLengthSelect').addEventListener('change', function() {
+            const customInput = document.getElementById('customQuizLengthInput');
+            if (this.value === 'custom') {
+                customInput.style.display = 'block';
+                customInput.focus();
+            } else {
+                customInput.style.display = 'none';
+            }
+        });
+
+
         document.getElementById('feedbackForm').addEventListener('submit', async function(event) {
             event.preventDefault();
 
@@ -873,7 +2211,7 @@
                 if (response.ok) {
                     alert('თქვენი შეტყობინება წარმატებით გაიგზავნა! გმადლობთ უკუკავშირისთვის.');
                     form.reset();
-                    closeModal('feedbackModal');
+                    closeModal('contributeModal');
                 } else {
                     alert('დაფიქსირდა შეცდომა შეტყობინების გაგზავნისას. გთხოვთ, სცადოთ მოგვიანებით.');
                 }
@@ -883,15 +2221,11 @@
             }
         });
 
-        // Add New Battle Form Submission (Now sends to Admin via Formspree)
         document.getElementById('addBattleForm').addEventListener('submit', async function(event) {
             event.preventDefault();
 
             const form = event.target;
             const formData = new FormData(form);
-
-            // You can optionally add a subject line for the email in Formspree dashboard
-            // or by appending a hidden input field like <input type="hidden" name="_subject" value="New Battle Submission">
             
             try {
                 const response = await fetch(form.action, {
@@ -905,7 +2239,7 @@
                 if (response.ok) {
                     alert('თქვენი შემოთავაზება წარმატებით გაიგზავნა ადმინისტრატორთან განსახილველად! გმადლობთ წვლილისთვის.');
                     form.reset();
-                    closeModal('addBattleModal');
+                    closeModal('contributeModal');
                 } else {
                     alert('დაფიქსირდა შეცდომა შემოთავაზების გაგზავნისას. გთხოვთ, სცადოთ მოგვიანებით.');
                 }
@@ -916,11 +2250,30 @@
         });
 
 
-        // Load added battles and update history list on page load
         document.addEventListener('DOMContentLoaded', () => {
+            const storedHistory = localStorage.getItem('searchHistory');
+            if (storedHistory) {
+                searchHistory = JSON.parse(storedHistory);
+            }
             updateHistoryList();
-            // Initial message if no search yet
-            document.getElementById('battleInfo').innerHTML = 'შეიყვანეთ წელი და გაიგეთ მეტი ისტორიული ბრძოლების შესახებ!';
+            loadKnowledgeLists();
+            updateLeaderboardDisplay(); 
+
+            document.getElementById('battleInfo').innerHTML = '<p>შეიყვანეთ წელი და გაიგეთ მეტი ისტორიული ბრძოლების შესახებ!</p>';
+
+            let totalScore = parseInt(localStorage.getItem('totalQuizScore')) || 0;
+            document.getElementById('totalScoreDisplay').innerHTML = `<i class="fas fa-medal"></i> სულ: ${totalScore}`;
+
+            // Load page views and subscription status
+            pageViews = parseInt(localStorage.getItem('pageViews')) || 0;
+            isSubscribed = localStorage.getItem('isSubscribed') === 'true';
+        });
+
+        window.addEventListener('beforeunload', () => {
+            localStorage.setItem('searchHistory', JSON.stringify(searchHistory));
+            localStorage.setItem('leaderboard', JSON.stringify(leaderboard)); 
+            localStorage.setItem('pageViews', pageViews);
+            localStorage.setItem('isSubscribed', isSubscribed);
         });
     </script>
 </body>
